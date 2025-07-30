@@ -1,0 +1,70 @@
+.about-page {
+  background: #0d0d0d;
+  min-height: 100vh;
+  padding: 60px 20px;
+  color: #f5f5f5;
+  font-family: 'Segoe UI', sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.about-content {
+  max-width: 900px;
+  text-align: center;
+}
+
+.neon-title {
+  font-size: 3rem;
+  margin-bottom: 30px;
+  color: #0ff;
+  text-shadow: 0 0 10px #0ff, 0 0 20px #0ff;
+}
+
+.about-text {
+  font-size: 1.2rem;
+  line-height: 1.8;
+  margin-bottom: 20px;
+  color: #ccc;
+}
+
+.about-team {
+  margin-top: 50px;
+}
+
+.team-heading {
+  font-size: 2rem;
+  margin-bottom: 20px;
+  color: #39ff14;
+  text-shadow: 0 0 10px #39ff14;
+}
+
+.team-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+}
+
+.team-card {
+  background: #1a1a1a;
+  border: 2px solid #0ff;
+  padding: 20px;
+  width: 200px;
+  border-radius: 12px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.team-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 0 15px #0ff;
+}
+
+.team-card h3 {
+  margin: 0;
+  color: #fff;
+}
+
+.team-card p {
+  color: #aaa;
+}

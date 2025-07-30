@@ -1,0 +1,347 @@
+/* BookList.css */
+.book-list {
+    padding: 20px;
+  }
+  
+  .cart-button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 1rem;
+    color: #fff;
+    background-color: #3498db;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .cart-button:hover {
+    background-color: #2980b9;
+  }
+  
+  .logout-button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 1rem;
+    color: #fff;
+    background-color: #e74c3c;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .logout-button:hover {
+    background-color: #c0392b;
+  }
+/* Center the search and filter bars */
+.book-list {
+  padding: 20px;
+  max-width: 1400px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* Style the search and filter bars */
+.search-bar, .filter-bar {
+  margin: 10px 0;
+  width: 100%;
+  max-width: 500px; /* Adjust as needed */
+  display: flex;
+  justify-content: center;
+}
+
+/* Books Container */
+.User_books {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(250px, 1fr));
+  gap: 5px;
+  padding: 20px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+/* Book Container */
+.book {
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 15px;
+  background-color: #f9f9f9;
+  box-shadow: 0 2px 4px #333;
+  width: 100%;
+}
+
+/* Table Styling */
+.book-table {
+  width: 100%;
+  height: 100%;
+  background-color: #f9f9f9;
+  margin: 0%;
+}
+.image-data
+{
+  height: 150px;
+}
+.book-image {
+  text-align: center;
+  margin-bottom: 10px; /* Space between image and details */
+  height: 150px;
+}
+
+.user-book-image {
+  width: 140px;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 10px;
+  box-shadow: 0 2px 12px rgba(10,26,60,0.13);
+  margin-bottom: 1rem;
+  background: #eee;
+}
+
+.padding_none
+{
+  padding: 0%;
+}
+
+.book-details .user-book-title {
+  font-size: 30px;
+  margin: 0;
+  margin-bottom: 15px;
+  color: black;
+  font-weight: bold;
+}
+
+.user-book-author
+{
+  font-size: 20px;
+  color: #333;
+}
+.book-details .user-book-genre 
+{
+  font-size: 20px;
+  font-weight: bold;
+  margin-top: 30px;
+}
+.user-book-desc
+{
+  font-size: 15px;
+  font-weight: lighter;
+  color: #333;
+}
+.book-desc
+{
+  padding-bottom: 0%;
+}
+
+/* Buttons Row */
+.book-buttons {
+  text-align: center;
+  padding-top: 0%;
+}
+
+.user-book-price,
+.user-book-quantity {
+  font-size: 1em;
+  color: #000;
+  margin: 5px 0;
+}
+
+button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+/* Sold Out Text */
+p[style*="color: red"] {
+  font-weight: bold;
+  margin: 10px 0;
+}
+
+.book-list {
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 2rem 1rem;
+  background: rgba(10, 26, 60, 0.85);
+  border-radius: 18px;
+  box-shadow: 0 4px 32px rgba(0,0,0,0.18);
+}
+
+.book-list h1 {
+  color: #fff;
+  font-size: 2.2rem;
+  font-weight: 700;
+  margin-bottom: 2rem;
+  text-align: center;
+  letter-spacing: 1px;
+}
+
+.User_books {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(250px, 1fr));
+  gap: 2rem;
+  justify-content: center;
+}
+
+.book {
+  background: rgba(6, 6, 6, 0.97);
+  border-radius: px;
+  box-shadow: 0 2px 16px rgba(10,26,60,0.13);
+  padding: 1.2rem 1.2rem 1.5rem 1.2rem;
+  width: 270px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: box-shadow 0.2s, transform 0.2s;
+  position: relative;
+}
+
+.book:hover {
+  box-shadow: 0 8px 32px rgba(179,18,23,0.18);
+  transform: translateY(-6px) scale(1.03);
+}
+
+.user-book-image {
+  width: 140px;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 10px;
+  box-shadow: 0 2px 12px rgba(10,26,60,0.13);
+  margin-bottom: 1rem;
+  background: #eee;
+}
+
+.user-book-title {
+  color: #0a1a3c;
+  font-size: 1.18rem;
+  font-weight: 700;
+  margin: 0.3rem 0 0.1rem 0;
+  text-align: center;
+}
+
+.user-book-author {
+  color: #b31217;
+  font-size: 1rem;
+  font-weight: 500;
+  margin: 0.1rem 0 0.2rem 0;
+  text-align: center;
+}
+
+.user-book-genre {
+  color: #444;
+  font-size: 0.98rem;
+  font-weight: 500;
+  margin: 0.1rem 0 0.2rem 0;
+  text-align: center;
+}
+
+.user-book-desc {
+  color: #222;
+  font-size: 0.95rem;
+  font-weight: 400;
+  margin: 0.5rem 0 0.7rem 0;
+  text-align: center;
+  min-height: 48px;
+}
+
+.book-buttons {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 0.5rem;
+}
+
+.book-buttons button {
+  background: linear-gradient(90deg, #b31217 60%, #0a1a3c 100%);
+  color: #fff;
+  border: none;
+  border-radius: 7px;
+  padding: 0.5rem 1.2rem;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 0.5rem;
+  transition: background 0.2s, box-shadow 0.2s;
+  box-shadow: 0 2px 8px rgba(179,18,23,0.10);
+}
+
+.book-buttons button:hover {
+  background: linear-gradient(90deg, #0a1a3c 60%, #b31217 100%);
+  box-shadow: 0 4px 16px rgba(179,18,23,0.18);
+}
+
+.book-buttons p {
+  margin: 0.3rem 0 0 0;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.book-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: none;
+}
+
+.book-image,
+.book-details,
+.book-desc,
+.book-buttons {
+  background: none;
+}
+
+.image-data,
+.padding_none {
+  padding: 0;
+  background: none;
+}
+
+@media (max-width: 900px) {
+  .User_books {
+    gap: 1.2rem;
+  }
+  .book {
+    width: 95vw;
+    max-width: 340px;
+    padding: 1rem 0.7rem 1.2rem 0.7rem;
+  }
+}
+
+/* BookList.css */
+
+/* Container styling stays the same */
+.genre-dropdown {
+  margin: 20px 0;
+}
+
+/* Dark-themed drop-down styling */
+.genre-dropdown select {
+  padding: 8px 12px;
+  border: 2px solid #007BFF;
+  border-radius: 4px;
+  background-color: #111;   /* dark background */
+  color: #fff;              /* white text */
+  font-size: 16px;
+  cursor: pointer;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.genre-dropdown select:focus {
+  border-color: #00bfff;   /* bright blue on focus */
+  box-shadow: 0 0 5px #00bfff;
+  outline: none;
+}
+
+.genre-dropdown label {
+  margin-right: 10px;
+  font-weight: bold;
+  font-size: 16px;
+  color: #fff; /* white label for dark background */
+}

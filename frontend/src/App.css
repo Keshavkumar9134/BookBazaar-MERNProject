@@ -1,0 +1,87 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+nav {
+  background-color: #333;
+  padding: 10px;
+}
+
+nav a {
+  color: white;
+  margin-right: 15px;
+  text-decoration: none;
+}
+
+nav a:hover {
+  text-decoration: underline;
+}
+
+/* App.css */
+body, #root {
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+  background: linear-gradient(135deg, #0a1a3c 0%, #b31217 100%);
+  background-attachment: fixed;
+  color: #fff; /* Make all text white */
+}
+
+body {
+  margin: 0;
+  font-family: 'Arial', sans-serif;
+  background-color: #f4f4f9;
+  color: #333;
+}
+
+a, h1, h2, h3, h4, h5, h6, p, label, span, input, button {
+  color: #fff !important; /* Ensure all text elements are white */
+}
+
+/* Optional: For input fields and buttons, adjust background for contrast */
+input, textarea, select {
+  background: rgba(20, 20, 40, 0.8);
+  color: #fff;
+  border: 1px solid #fff;
+}
+
+button {
+  background: rgba(179, 18, 23, 0.8);
+  color: #fff;
+  border: 1px solid #fff;
+}

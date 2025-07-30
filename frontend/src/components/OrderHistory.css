@@ -1,0 +1,182 @@
+/* OrderHistory.css */
+.order-history {
+    padding: 32px 0 32px 0;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #0a1a3c 0%, #b31217 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+  }
+  
+  .order-history h1 {
+    color: #ffe7e7;
+    font-size: 2.2rem;
+    font-weight: 800;
+    margin-bottom: 1.2rem;
+    letter-spacing: 1px;
+    text-align: center;
+    font-family: 'Montserrat', 'Segoe UI', sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.7rem;
+  }
+  
+  .order-history .checkout-logo {
+    width: 48px;
+    height: 48px;
+    margin-bottom: 0.5rem;
+    vertical-align: middle;
+    filter: drop-shadow(0 2px 8px rgba(10,26,60,0.18));
+  }
+  
+  /* Order Card */
+  .order-item {
+    background: rgba(24, 28, 44, 0.98);
+    border-radius: 18px;
+    box-shadow: 0 4px 24px rgba(10,26,60,0.18);
+    padding: 1.5rem 2rem 1.2rem 2rem;
+    margin-bottom: 2.2rem;
+    width: 100%;
+    max-width: 720px;
+    border: 1.5px solid #b31217;
+    position: relative;
+    transition: box-shadow 0.2s, transform 0.2s, border 0.2s;
+    cursor: pointer;
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+  }
+  
+  .order-item:hover {
+    box-shadow: 0 8px 32px rgba(179,18,23,0.22);
+    transform: translateY(-4px) scale(1.025);
+    border-color: #ffe7e7;
+  }
+  
+  /* Order Header Row */
+  .order-summary-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 1.2rem;
+    border-bottom: 1px solid #b31217;
+    padding-bottom: 0.7rem;
+    margin-bottom: 0.7rem;
+  }
+  
+  .order-summary-col {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+  }
+  
+  .order-label {
+    color: #ffb3b3;
+    font-weight: 700;
+    font-size: 1.01rem;
+    font-family: 'Montserrat', 'Segoe UI', sans-serif;
+  }
+  
+  .order-value {
+    color: #ffe7e7;
+    font-weight: 600;
+    font-size: 1.01rem;
+    word-break: break-all;
+  }
+  
+  /* Book List in Order */
+  .order-books-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 1.1rem;
+  }
+  
+  .order-book-item {
+    display: flex;
+    align-items: center;
+    background: rgba(10, 26, 60, 0.13);
+    border-radius: 10px;
+    padding: 0.8rem 1rem;
+    gap: 1.2rem;
+    transition: background 0.18s, color 0.18s;
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+    box-shadow: 0 2px 8px rgba(10,26,60,0.10);
+  }
+  
+  .order-book-item:hover {
+    background: #b31217;
+    color: #fff;
+  }
+  
+  .book-cover {
+    width: 56px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 7px;
+    background: #eee;
+    box-shadow: 0 2px 8px rgba(10,26,60,0.10);
+    border: 1px solid #b31217;
+  }
+  
+  .book-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+  }
+  
+  .book-title {
+    font-weight: 700;
+    color: #ffb3b3;
+    font-family: 'Montserrat', 'Segoe UI', sans-serif;
+    font-size: 1.08rem;
+  }
+  
+  .book-author {
+    color: #ffe7e7;
+    font-size: 0.98rem;
+    font-weight: 500;
+  }
+  
+  .book-qty {
+    color: #ffe7e7;
+    font-weight: 600;
+    font-size: 1rem;
+  }
+  
+  .book-price {
+    color: #ffe7e7;
+    font-weight: 700;
+    font-size: 1.05rem;
+  }
+  
+  @media (max-width: 900px) {
+    .order-item {
+      max-width: 98vw;
+      padding: 1rem 0.5rem;
+    }
+    .order-history {
+      padding: 18px 0 18px 0;
+    }
+    .order-summary-row {
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    .order-book-item {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.5rem;
+      padding: 0.7rem 0.5rem;
+    }
+    .book-cover {
+      width: 44px;
+      height: 62px;
+    }
+  }
