@@ -16,7 +16,7 @@ const PutOnSale = () => {
 
   const fetchBooks = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/api/books');
+      const response = await axios.get('https://bookshope.onrender.com/api/books');
       setBooks(response.data);
 
       // ✅ Pre-fill discounts with existing discount from DB
@@ -47,7 +47,7 @@ const PutOnSale = () => {
       }
 
       await axios.patch(
-        `http://localhost:5000/api/books/${bookId}/sale`,
+        `https://bookshope.onrender.com/api/books/${bookId}/sale`,
         { discount: discount },
         {
           headers: {
@@ -66,7 +66,7 @@ const PutOnSale = () => {
   const handleRemoveSale = async (bookId) => {
     try {
       await axios.patch(
-        `http://localhost:5000/api/books/${bookId}/remove-sale`,
+        `https://bookshope.onrender.com/api/books/${bookId}/remove-sale`,
         {},
         {
           headers: {

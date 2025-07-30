@@ -27,7 +27,7 @@ const Checkout = () => {
       if (!user?.token) throw new Error('User not logged in');
 
       await axios.post(
-        'http://localhost:5000/api/cart/checkout',
+        'https://bookshope.onrender.com/api/cart/checkout',
         {},
         { headers: { Authorization: `Bearer ${user.token}` } }
       );

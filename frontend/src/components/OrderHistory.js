@@ -12,7 +12,7 @@ const OrderHistory = () => {
     const fetchOrderHistory = async () => {
       try {
         console.log('Fetching order history for user:', user);
-        const response = await axios.get('http://localhost:5000/api/orders', {
+        const response = await axios.get('https://bookshope.onrender.com/api/orders', {
           headers: {
             Authorization: `Bearer ${user.token}`,
           },

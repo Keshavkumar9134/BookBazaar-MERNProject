@@ -13,7 +13,7 @@ const AllOrders = () => {
   useEffect(() => {
     const fetchAllOrders = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/api/all-orders', {
+        const response = await axios.get('https://bookshope.onrender.com/api/all-orders', {
           headers: {
             Authorization: `Bearer ${user.token}`,
           },

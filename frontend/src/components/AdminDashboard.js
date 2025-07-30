@@ -29,7 +29,7 @@ const AdminDashboard = () => {
 
   const fetchBooks = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/api/books');
+      const response = await axios.get('https://bookshope.onrender.com/api/books');
       setBooks(response.data);
       setFilteredBooks(response.data);
     } catch (err) {
@@ -61,7 +61,7 @@ const AdminDashboard = () => {
 
   const handleDeleteBook = async (bookId) => {
     try {
-      await axios.delete(`http://localhost:5000/api/books/${bookId}`, {
+      await axios.delete(`https://bookshope.onrender.com/api/books/${bookId}`, {
         headers: {
           Authorization: `Bearer ${user.token}`,
         },

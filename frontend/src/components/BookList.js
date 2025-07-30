@@ -24,7 +24,7 @@ const BookList = () => {
   const fetchBooks = async () => {
     try {
       const params = new URLSearchParams(location.search);
-      let url = 'http://localhost:5000/api/books';
+      let url = 'https://bookshope.onrender.com/api/books';
 
       if (params.toString()) {
         url += '?' + params.toString();

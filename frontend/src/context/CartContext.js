@@ -9,7 +9,7 @@ export const CartProvider = ({ children }) => {
   // Fetch the user's cart from the backend
   const fetchCart = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/api/cart', {
+      const response = await axios.get('https://bookshope.onrender.com/api/cart', {
         headers: {
           Authorization: `Bearer ${JSON.parse(localStorage.getItem('user')).token}`,
         },
@@ -24,7 +24,7 @@ export const CartProvider = ({ children }) => {
   const addToCart = async (bookId, quantity = 1) => {
     try {
       const response = await axios.post(
-        'http://localhost:5000/api/cart/add',
+        'https://bookshope.onrender.com/api/cart/add',
         { bookId, quantity },
         {
           headers: {
@@ -36,7 +36,7 @@ export const CartProvider = ({ children }) => {
 
       // Reduce the book quantity in the backend
       await axios.put(
-        `http://localhost:5000/api/books/${bookId}/reduce-quantity`,
+        `hhttps://bookshope.onrender.com/${bookId}/reduce-quantity`,
         { quantity: 1 }, // Reduce quantity by 1
         {
           headers: {
@@ -57,7 +57,7 @@ export const CartProvider = ({ children }) => {
       console.log('Removing book from cart. Book ID:', bookIdString);
   
       await axios.post(
-        'http://localhost:5000/api/cart/remove',
+        'https://bookshope.onrender.com/api/cart/remove',
         { bookId: bookIdString },
         {
           headers: {
@@ -70,7 +70,7 @@ export const CartProvider = ({ children }) => {
       // Increment the book quantity in the backend
       console.log('Incrementing quantity for book ID:', bookIdString);
       await axios.put(
-        `http://localhost:5000/api/books/${bookIdString}/increment-quantity`,
+        `https://bookshope.onrender.com/api/books/${bookIdString}/increment-quantity`,
         { quantity: 1 }, // Increment quantity by 1
         {
           headers: {
@@ -122,7 +122,7 @@ const clearCart = async () => {
   
       // Clear the cart in the backend
       await axios.post(
-        'http://localhost:5000/api/cart/clear',
+        'https://bookshope.onrender.com/api/cart/clear',
         {},
         {
           headers: {
