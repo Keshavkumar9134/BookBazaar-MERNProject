@@ -3,6 +3,7 @@ import { CartContext } from '../context/CartContext';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './Checkout.css';
+import './CheckoutTheme.css';
 import { apiUrl } from '../api';
 
 const Checkout = () => {

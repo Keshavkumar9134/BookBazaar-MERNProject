@@ -1,5 +1,6 @@
 import React from 'react';
 import './About.css';
+import './AboutTheme.css';
 import Header from './Header';
 
 const About = () => {

@@ -1,128 +1,149 @@
-:root {
-  --dark-bg: #121212;
-  --card-bg: #1f1f1f;
-  --primary: #6a5acd;
-  --accent: #00d4ff;
-  --text: #f0f0f0;
-  --text-secondary: #aaa;
-}
-
-body {
-  margin: 0;
-  padding: 0;
-  background-color: var(--dark-bg);
-}
-
 .admin-dashboard {
-  background-color: var(--dark-bg);
-  color: var(--text);
   min-height: 100vh;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  padding: 2rem 1.25rem 4rem;
+  background: transparent;
+  color: var(--text);
 }
 
 .admin-header {
-  background-color: var(--card-bg);
-  padding: 1rem 2rem;
+  max-width: 1240px;
+  margin: 0 auto 1.5rem;
+  padding: 1.35rem 1.5rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 1px solid var(--primary);
+  gap: 1rem;
+  flex-wrap: wrap;
+  background: rgba(20, 32, 51, 0.92);
+  color: #fff8eb;
+  border-radius: 28px;
+  box-shadow: var(--shadow-md);
 }
 
 .admin-header h1 {
-  font-size: 1.8rem;
+  margin: 0;
+  font-size: clamp(2rem, 4vw, 2.8rem);
+}
+
+.button-container {
+  display: flex;
+  gap: 0.85rem;
+  flex-wrap: wrap;
 }
 
 .button-container button {
-  background: transparent;
-  border: 1px solid var(--primary);
-  color: var(--text);
-  padding: 0.5rem 1rem;
-  margin-left: 1rem;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.button-container button:hover {
-  background: var(--primary);
-  transform: translateY(-2px);
+  padding: 0.9rem 1.2rem;
+  border-radius: 14px;
+  font-weight: 700;
+  color: #fff;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .add-book-box {
-  padding: 2rem;
+  max-width: 1240px;
+  margin: 0 auto 1.5rem;
+  padding: 1.5rem;
   display: flex;
   justify-content: center;
-  gap: 2rem;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  box-shadow: var(--shadow-sm);
 }
 
 .add-book-box button {
-  background: linear-gradient(135deg, var(--primary), #8a2be2);
-  color: white;
-  border: none;
-  padding: 0.8rem 1.5rem;
-  border-radius: 6px;
-  font-weight: bold;
-  cursor: pointer;
-  transition: all 0.3s ease;
+  padding: 0.95rem 1.4rem;
+  border-radius: 14px;
+  color: #fff;
+  font-weight: 700;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-.add-book-box button:hover {
-  transform: scale(1.05);
+.all-orders-button,
+.add-book-btn {
+  background: linear-gradient(135deg, #234e52 0%, #17393d 100%);
+  box-shadow: 0 12px 22px rgba(35, 78, 82, 0.2);
+}
+
+.logout-button,
+.put-on-sale-btn {
+  background: linear-gradient(135deg, #b7791f 0%, #975f14 100%);
+  box-shadow: 0 12px 22px rgba(183, 121, 31, 0.22);
+}
+
+.button-container button:hover,
+.add-book-box button:hover,
+.book-delete-btn:hover,
+.book-update-button:hover,
+.book-item form button:hover {
+  transform: translateY(-1px);
 }
 
 .book-container {
-  padding: 2rem;
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 1.75rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 28px;
+  box-shadow: var(--shadow-md);
 }
 
 .book_list {
-  font-size: 2rem;
-  margin-bottom: 1rem;
-  color: var(--accent);
+  margin: 0 0 1.25rem;
+  text-align: center;
+  font-size: clamp(1.8rem, 3vw, 2.5rem);
+  color: var(--heading);
 }
 
 .book-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 2rem;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.35rem;
 }
 
 .book-item {
-  background: var(--card-bg);
-  border-radius: 8px;
+  background: var(--surface-strong);
+  border-radius: 24px;
   overflow: hidden;
-  border: 2px solid var(--primary);
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
-  transition: transform 0.3s ease;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  text-align: center;
 }
 
 .book-item:hover {
-  transform: translateY(-5px);
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+  border-color: rgba(183, 121, 31, 0.24);
 }
 
 .Book-Container {
-  padding: 1rem;
+  padding: 1.1rem;
+  height: 100%;
 }
 
 .Book-Image {
   width: 100%;
-  max-width: 180px;
-  height: auto;
-  border-radius: 6px;
+  height: 240px;
+  object-fit: cover;
+  border-radius: 18px;
   margin-bottom: 1rem;
 }
 
 .book-details {
-  padding: 0 1rem;
+  padding: 0;
+  text-align: left;
 }
 
 .book_title {
-  font-size: 1.2rem;
-  color: var(--accent);
+  margin: 0 0 0.45rem;
+  font-size: 1.25rem;
+  color: var(--heading);
   margin-bottom: 0.5rem;
 }
 
@@ -131,43 +152,78 @@ body {
 .book_desc,
 .book_price,
 .book_quantity {
-  font-size: 0.95rem;
-  margin: 3px 0;
-  color: var(--text-secondary);
+  font-size: 0.96rem;
+  margin: 0 0 0.4rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+.book_genre,
+.book_price {
+  font-weight: 700;
+  color: var(--primary);
 }
 
 .button-row {
   margin-top: 1rem;
   display: flex;
-  justify-content: center;
-  gap: 0.5rem;
+  justify-content: stretch;
+  gap: 0.75rem;
   flex-wrap: wrap;
 }
 
 .book-delete-btn,
 .book-update-button {
-  padding: 0.4rem 0.8rem;
-  font-size: 0.85rem;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-weight: bold;
+  flex: 1;
+  min-width: 110px;
+  padding: 0.8rem 1rem;
+  font-size: 0.92rem;
+  border-radius: 12px;
+  font-weight: 700;
 }
 
 .book-delete-btn {
-  background: #ff4d4f;
-  color: white;
+  background: #c53030;
+  color: #fff;
 }
 
 .book-update-button {
-  background: var(--accent);
-  color: var(--dark-bg);
+  background: linear-gradient(135deg, #234e52 0%, #17393d 100%);
+  color: #fff;
 }
 
-.book-delete-btn:hover {
-  background: #cc2b2f;
+.book-item form {
+  display: grid;
+  gap: 0.8rem;
+  padding: 1.1rem;
 }
 
-.book-update-button:hover {
-  background: #00b4cc;
+.book-item form button {
+  padding: 0.9rem 1rem;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #b7791f 0%, #975f14 100%);
+  color: #fff;
+  font-weight: 700;
+}
+
+@media (max-width: 768px) {
+  .admin-dashboard {
+    padding: 1rem 1rem 3rem;
+  }
+
+  .admin-header,
+  .add-book-box,
+  .book-container {
+    padding: 1.1rem;
+  }
+
+  .button-container,
+  .add-book-box {
+    width: 100%;
+  }
+
+  .button-container button,
+  .add-book-box button {
+    width: 100%;
+  }
 }

@@ -1,150 +1,147 @@
 .register-container {
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
-  align-items: center;
   justify-content: center;
-  height: 100vh;
+  align-items: center;
+  gap: 1.25rem;
+  padding: 2rem 1rem;
   background-size: cover;
   background-position: center;
-  background-repeat: no-repeat;
-  transition: background-image 1s ease-in-out;
+  position: relative;
+}
+
+.register-container::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(rgba(20, 32, 51, 0.76), rgba(20, 32, 51, 0.76));
+}
+
+.register-box,
+.back-button {
+  position: relative;
+  z-index: 1;
 }
 
 .register-box {
-  background: rgba(71, 70, 70, 0.85);
-  padding: 25px 30px; /* reduced padding */
-  border-radius: 10px;
-  box-shadow: 0 0 15px 5px #742ea9;
-  width: 100%;
-  max-width: 400px;
-  text-align: center;
-  max-height: 80vh; /* limit height */
-  overflow-y: auto; /* scroll if content overflows */
+  width: min(500px, 100%);
+  max-height: 88vh;
+  overflow-y: auto;
+  padding: 2rem;
+  border-radius: 28px;
+  background: rgba(255, 252, 247, 0.94);
+  border: 1px solid rgba(255, 255, 255, 0.24);
+  box-shadow: 0 24px 48px rgba(10, 18, 32, 0.28);
 }
 
-
 .register-box h1 {
-  margin-bottom: 20px;
-  font-size: 24px;
-  color: black;
+  margin: 0 0 1.35rem;
+  text-align: center;
+  color: var(--heading);
 }
 
 .input-group {
-  margin-bottom: 20px;
-  text-align: left;
+  margin-bottom: 1rem;
 }
 
 .input-group label {
   display: block;
-  margin-bottom: 5px;
-  font-size: 20px;
-  color: black;
-  font-weight: bold;
-}
-
-.input-group input,
-.input-group select {
-  width: 100%;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  font-size: 16px;
-}
-
-.red {
-  color: red;
-  font-size: 20px;
-  line-height: 1;
+  margin-bottom: 0.45rem;
+  color: var(--heading);
+  font-size: 0.96rem;
+  font-weight: 600;
 }
 
 .register-button {
   width: 100%;
-  padding: 10px;
-  background-color: #8541c0;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  font-size: 16px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
+  padding: 0.92rem 1rem;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #b7791f 0%, #975f14 100%);
+  color: #fff;
+  font-weight: 700;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 14px 28px rgba(183, 121, 31, 0.22);
 }
 
 .register-button:hover {
-  background-color: #521289;
+  transform: translateY(-1px);
 }
 
 .error-message {
-  color: red;
-  font-size: 14px;
+  color: #8f1d1d;
+  background: rgba(197, 48, 48, 0.1);
+  padding: 0.85rem 1rem;
   margin-bottom: 10px;
+  border-radius: 14px;
+  border: 1px solid rgba(197, 48, 48, 0.24);
+  font-weight: 600;
 }
 
 .success-message {
-  color: #d9ffd6;
-  font-size: 14px;
+  color: #1f5d3e;
+  background: rgba(47, 133, 90, 0.12);
+  padding: 0.85rem 1rem;
   margin-bottom: 10px;
+  border-radius: 14px;
+  border: 1px solid rgba(47, 133, 90, 0.22);
+  font-weight: 600;
 }
 
 .otp-form {
-  margin-top: 16px;
-  padding-top: 16px;
-  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  margin-top: 1.3rem;
+  padding-top: 1.2rem;
+  border-top: 1px solid rgba(20, 32, 51, 0.1);
 }
 
 .otp-note {
-  margin: 0 0 12px;
-  color: #f0f0f0;
-  font-size: 13px;
-  text-align: left;
+  margin: 0 0 1rem;
+  color: var(--text-muted);
+  line-height: 1.6;
 }
 
 .secondary-button {
   width: 100%;
-  padding: 10px;
-  margin-top: 10px;
-  background-color: transparent;
-  color: white;
-  border: 1px solid #fff;
-  border-radius: 5px;
-  font-size: 16px;
-  cursor: pointer;
+  padding: 0.92rem 1rem;
+  margin-top: 0.75rem;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #234e52 0%, #17393d 100%);
+  color: #fff;
+  font-weight: 700;
+  box-shadow: 0 14px 28px rgba(35, 78, 82, 0.2);
 }
 
 .secondary-button:hover {
-  background-color: rgba(255, 255, 255, 0.12);
+  transform: translateY(-1px);
 }
 
 .login-link {
-  margin-top: 15px;
-  font-size: 14px;
-  color: #555;
+  margin-top: 1.15rem;
+  text-align: center;
+  color: var(--text-muted);
 }
 
 .login-link a {
-  color: #8b2ed3;
-  text-decoration: none;
-}
-
-.login-link a:hover {
-  text-decoration: underline;
+  color: var(--primary);
+  font-weight: 700;
 }
 
 .back-button {
-  margin-top: 20px;
-  padding: 10px 20px;
-  background-color: #be0b8e;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
+  width: 100%;
+  max-width: 240px;
+  padding: 0.92rem 1rem;
+  background: rgba(255, 252, 247, 0.16);
+  border: 1px solid rgba(255, 255, 255, 0.24);
+  border-radius: 14px;
+  color: #fff;
+  font-weight: 700;
+  transition: transform 0.2s ease;
 }
 
 .back-button:hover {
-  background-color: #890b68;
+  transform: translateY(-1px);
 }
 
-.input-group select {
-  height: 40px;
-  font-size: 17px;
+.red {
+  color: var(--danger);
 }

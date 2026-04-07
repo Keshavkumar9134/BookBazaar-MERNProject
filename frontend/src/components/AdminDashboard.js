@@ -100,9 +100,6 @@ const AdminDashboard = () => {
       <header className="admin-header">
         <h1>Admin Dashboard</h1>
         <div className="button-container">
-          <button className="all-orders-button" onClick={() => navigate('/all-orders')}>
-            All Orders
-          </button>
           <button className="logout-button" onClick={handleLogout}>
             Logout
           </button>
@@ -110,6 +107,9 @@ const AdminDashboard = () => {
       </header>
 
       <div className="add-book-box">
+        <button className="all-orders-button" onClick={() => navigate('/all-orders')}>
+          All Orders
+        </button>
         <button className="add-book-btn" onClick={() => navigate('/add-book')}>
           Add Book
         </button>

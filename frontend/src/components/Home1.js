@@ -11,7 +11,7 @@ const Home1 = () => {
       <Header />
       <div className="home1-body">
         <h3>Welcome to</h3>
-        <h1>BookShope</h1>
+        <h1>BookBazaar</h1>
         <p>A cozy corner for every reader.</p>
 
         <div

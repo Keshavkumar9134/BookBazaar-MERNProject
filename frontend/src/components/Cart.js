@@ -2,6 +2,7 @@ import React, { useContext, useEffect } from 'react';
 import { CartContext } from '../context/CartContext';
 import './Cart.css';
 import { useNavigate } from 'react-router-dom';
+import Header from './Header';
 
 const Cart = () => {
   const { cart, removeFromCart, clearCart, fetchCart } = useContext(CartContext);
@@ -12,7 +13,9 @@ const Cart = () => {
   }, [fetchCart]);
 
   return (
-    <div className="cart-container">
+    <div>
+      <Header />
+      <div className="cart-container">
       <div className="cart-header">
         <h1>Your Cart</h1>
         <img
@@ -91,6 +94,7 @@ const Cart = () => {
           </div>
         </div>
       )}
+      </div>
     </div>
   );
 };

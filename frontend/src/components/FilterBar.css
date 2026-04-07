@@ -56,9 +56,9 @@
     background-color: #e0e0e0;
   }
   
-  /* Responsive adjustments */
-  @media (max-width: 480px) {
-    form {
+/* Responsive adjustments */
+@media (max-width: 480px) {
+  form {
       flex-direction: column;
       align-items: stretch;
     }
@@ -72,3 +72,30 @@
       width: 100%;
     }
   }
+
+.filter-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.8rem;
+  margin: 0 auto 1.25rem;
+  flex-wrap: wrap;
+}
+
+.filter-bar label {
+  color: var(--heading);
+  font-weight: 600;
+}
+
+.filter-bar select {
+  width: auto;
+  min-width: 220px;
+  background: var(--surface);
+  color: var(--heading);
+  font-weight: 600;
+}
+
+.filter-bar select option {
+  color: var(--heading);
+  background: #fffdf9;
+}
