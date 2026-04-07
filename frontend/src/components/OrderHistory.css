@@ -156,6 +156,22 @@
     font-weight: 700;
     font-size: 1.05rem;
   }
+
+  .order-location {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    align-items: center;
+    padding: 0.85rem 1rem;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.06);
+  }
+
+  .map-link {
+    color: #ffd7d7;
+    font-weight: 700;
+    text-decoration: underline;
+  }
   
   @media (max-width: 900px) {
     .order-item {

@@ -79,6 +79,41 @@
   margin-bottom: 10px;
 }
 
+.success-message {
+  color: #d9ffd6;
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+.otp-form {
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.otp-note {
+  margin: 0 0 12px;
+  color: #f0f0f0;
+  font-size: 13px;
+  text-align: left;
+}
+
+.secondary-button {
+  width: 100%;
+  padding: 10px;
+  margin-top: 10px;
+  background-color: transparent;
+  color: white;
+  border: 1px solid #fff;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.secondary-button:hover {
+  background-color: rgba(255, 255, 255, 0.12);
+}
+
 .login-link {
   margin-top: 15px;
   font-size: 14px;

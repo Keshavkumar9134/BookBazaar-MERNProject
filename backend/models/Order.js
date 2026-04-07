@@ -11,6 +11,13 @@ const OrderSchema = new mongoose.Schema({
     },
   ],
   total: { type: Number, required: true }, // Total price of the order
+  deliveryLocation: {
+    latitude: { type: Number, default: null },
+    longitude: { type: Number, default: null },
+    accuracy: { type: Number, default: null },
+    source: { type: String, default: 'browser-geolocation' },
+    capturedAt: { type: Date, default: null },
+  },
   createdAt: { type: Date, default: Date.now }, // Order creation date
 });
 

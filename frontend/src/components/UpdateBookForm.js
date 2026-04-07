@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { apiUrl } from '../api';
 
 const UpdateBookForm = ({ book, onUpdate }) => {
   const [formData, setFormData] = useState({
@@ -23,7 +24,7 @@ const UpdateBookForm = ({ book, onUpdate }) => {
     e.preventDefault();
     try {
       const response = await axios.put(
-        `http://localhost:5000/api/books/${book._id}`,
+        apiUrl(`/api/books/${book._id}`),
         formData,
         {
           headers: {

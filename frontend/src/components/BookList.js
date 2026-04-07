@@ -6,6 +6,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import SearchBar from './SearchBar';
 import './BookList.css';
 import Header from './Header';
+import { apiUrl } from '../api';
 
 const BookList = () => {
   const [books, setBooks] = useState([]);
@@ -24,7 +25,7 @@ const BookList = () => {
   const fetchBooks = async () => {
     try {
       const params = new URLSearchParams(location.search);
-      let url = 'https://bookshope.onrender.com/api/books';
+      let url = apiUrl('/api/books');
 
       if (params.toString()) {
         url += '?' + params.toString();

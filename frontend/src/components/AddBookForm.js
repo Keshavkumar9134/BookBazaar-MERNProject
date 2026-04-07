@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import './AddBookForm.css';
+import { apiUrl } from '../api';
 
 const AddBookForm = () => {
   const [formData, setFormData] = useState({
@@ -23,7 +24,7 @@ const AddBookForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('https://bookshope.onrender.com/api/books', formData, {
+      await axios.post(apiUrl('/api/books'), formData, {
         headers: {
           Authorization: `Bearer ${JSON.parse(localStorage.getItem('user')).token}`,
         },

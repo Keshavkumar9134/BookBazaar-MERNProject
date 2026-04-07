@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 import './Login.css';
+import { apiUrl } from '../api';
 
 // Import local images
 import bg1 from '../components/bgg1.jpg';
@@ -13,8 +14,11 @@ import bg4 from '../components/bgg4.jpg';
 const images = [bg1, bg2, bg3, bg4];
 
 const Login = () => {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState('');
+  const [otp, setOtp] = useState('');
+  const [otpSent, setOtpSent] = useState(false);
+  const [message, setMessage] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [bgImage, setBgImage] = useState(images[0]);
   const [error, setError] = useState('');
   const { login } = useContext(AuthContext);
@@ -30,16 +34,36 @@ const Login = () => {
     return () => clearInterval(interval);
   }, []);
 
-  const handleSubmit = async (e) => {
+  const handleRequestOtp = async (e) => {
     e.preventDefault();
-    setError(''); // Clear previous errors
+    setError('');
+    setMessage('');
 
     try {
-      const response = await axios.post('https://bookshope.onrender.com/api/auth/login', {
-        username,
-        password,
+      setIsSubmitting(true);
+      const response = await axios.post(apiUrl('/api/auth/login-otp/request'), {
+        email,
       });
+      setOtpSent(true);
+      setMessage(response.data.message || 'OTP sent to your email.');
+    } catch (err) {
+      setError(err.response?.data?.message || 'Could not send OTP.');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
+  const handleVerifyOtp = async (e) => {
+    e.preventDefault();
+    setError('');
+    setMessage('');
+
+    try {
+      setIsSubmitting(true);
+      const response = await axios.post(apiUrl('/api/auth/login-otp/verify'), {
+        email,
+        otp,
+      });
       const userData = {
         token: response.data.token,
         role: response.data.role,
@@ -54,11 +78,9 @@ const Login = () => {
         navigate('/Home1');
       }
     } catch (err) {
-      if (err.response?.status === 400) {
-        setError('Incorrect username or password.');
-      } else {
-        setError('An error occurred. Please try again later.');
-      }
+      setError(err.response?.data?.message || 'OTP verification failed.');
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -75,37 +97,53 @@ const Login = () => {
             {error}
           </div>
         )}
+        {message && (
+          <div className="success-message">
+            {message}
+          </div>
+        )}
 
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleRequestOtp}>
           <div className="input-group">
-            <label htmlFor="username">Username<span className='red'> *</span></label>
+            <label htmlFor="email">Email<span className='red'> *</span></label>
             <input
-              type="text"
-              id="username"
-              placeholder="Enter your username"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
+              type="email"
+              id="email"
+              placeholder="Enter your email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               required
             />
           </div>
-          <div className="input-group">
-            <label htmlFor="password">Password<span className='red'> *</span></label>
-            <input
-              type="password"
-              id="password"
-              placeholder="Enter your password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
-          </div>
-          <div className="remember-me">
-            <label>
-              <input type="checkbox" /> Remember me
-            </label>
-          </div>
-          <button type="submit" className="login-button">Login</button>
+          <button type="submit" className="login-button" disabled={isSubmitting}>
+            {otpSent ? 'Send OTP Again' : 'Send OTP'}
+          </button>
         </form>
+
+        {otpSent && (
+          <form onSubmit={handleVerifyOtp}>
+            <div className="input-group">
+              <label htmlFor="otp">OTP<span className='red'> *</span></label>
+              <input
+                type="text"
+                id="otp"
+                placeholder="Enter the 6-digit OTP"
+                value={otp}
+                onChange={(e) => setOtp(e.target.value)}
+                maxLength={6}
+                required
+              />
+            </div>
+            <div className="remember-me">
+              OTP is sent to your email. If SMTP is not configured, check the backend terminal.
+            </div>
+            <button type="submit" className="login-button" disabled={isSubmitting}>
+              Verify OTP
+            </button>
+          </form>
+        )}
+
+        <div className="login-divider">Use your registered email address to receive a one-time code and sign in.</div>
         <div className="register-link">
           <p>Don't have an account? <a href="/register" className='register-btn'>Register</a></p>
         </div>

@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import './Register.css';
+import { apiUrl } from '../api';
 
 // Import local background images
 import bg1 from '../components/bgg1.jpg';
@@ -15,10 +16,15 @@ const images = [bg1, bg2, bg3, bg4];
 const Register = () => {
   const [name, setName] = useState('');
   const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [role, setRole] = useState('user');
   const [adminPassword, setAdminPassword] = useState('');
+  const [otp, setOtp] = useState('');
+  const [otpSent, setOtpSent] = useState(false);
+  const [message, setMessage] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState('');
   const [bgImage, setBgImage] = useState(images[0]);
   const navigate = useNavigate();
@@ -35,6 +41,9 @@ const Register = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setError('');
+    setMessage('');
+
     if (password !== confirmPassword) {
       alert('Passwords do not match');
       return;
@@ -45,16 +54,55 @@ const Register = () => {
     }
 
     try {
-      const response = await axios.post('https://bookshope.onrender.com/api/auth/register', {
+      setIsSubmitting(true);
+      const response = await axios.post(apiUrl('/api/auth/register'), {
         username,
+        email,
         password,
         role,
       });
-      console.log('Registration successful:', response.data);
-      navigate('/login');
+      setOtpSent(true);
+      setMessage(response.data.message || 'OTP sent. Please verify your email.');
     } catch (err) {
       console.error('Registration error:', err.response?.data || err.message);
       setError(err.response?.data?.message || 'Registration failed. Please try again.');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const handleVerifyOtp = async (e) => {
+    e.preventDefault();
+    setError('');
+    setMessage('');
+
+    try {
+      setIsSubmitting(true);
+      const response = await axios.post(apiUrl('/api/auth/verify-otp'), {
+        email,
+        otp,
+      });
+      setMessage(response.data.message || 'Email verified successfully.');
+      setTimeout(() => navigate('/login'), 1000);
+    } catch (err) {
+      setError(err.response?.data?.message || 'OTP verification failed. Please try again.');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const handleResendOtp = async () => {
+    setError('');
+    setMessage('');
+
+    try {
+      setIsSubmitting(true);
+      const response = await axios.post(apiUrl('/api/auth/resend-otp'), { email });
+      setMessage(response.data.message || 'A new OTP has been sent.');
+    } catch (err) {
+      setError(err.response?.data?.message || 'Could not resend OTP.');
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -88,6 +136,19 @@ const Register = () => {
               placeholder="Enter your username"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
+            />
+          </div>
+          <div className="input-group">
+            <label htmlFor="email" className="params">
+              Email<span className="red"> *</span>
+            </label>
+            <input
+              type="email"
+              id="email"
+              placeholder="Enter your email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
             />
           </div>
           <div className="input-group">
@@ -137,15 +198,49 @@ const Register = () => {
                 id="adminPassword"
                 placeholder="Enter admin password"
                 value={adminPassword}
-                onChange={(e) => setAdminPassword(e.target.value)}
-              />
-            </div>
+              onChange={(e) => setAdminPassword(e.target.value)}
+            />
+          </div>
           )}
+          {message && <p className="success-message">{message}</p>}
           {error && <p className="error-message">{error}</p>}
-          <button type="submit" className="register-button">
-            Register
+          <button type="submit" className="register-button" disabled={isSubmitting}>
+            {otpSent ? 'Send OTP Again' : 'Register'}
           </button>
         </form>
+
+        {otpSent && (
+          <form onSubmit={handleVerifyOtp} className="otp-form">
+            <div className="input-group">
+              <label htmlFor="otp" className="params">
+                OTP<span className="red"> *</span>
+              </label>
+              <input
+                type="text"
+                id="otp"
+                placeholder="Enter the 6-digit OTP"
+                value={otp}
+                onChange={(e) => setOtp(e.target.value)}
+                maxLength={6}
+                required
+              />
+            </div>
+            <p className="otp-note">
+              Check your inbox for the verification code. If SMTP is not configured yet, the OTP will appear in the backend terminal.
+            </p>
+            <button type="submit" className="register-button" disabled={isSubmitting}>
+              Verify OTP
+            </button>
+            <button
+              type="button"
+              className="secondary-button"
+              onClick={handleResendOtp}
+              disabled={isSubmitting}
+            >
+              Resend OTP
+            </button>
+          </form>
+        )}
         <div className="login-link">
           <p>
             Already have an account? <a href="/login">Login</a>

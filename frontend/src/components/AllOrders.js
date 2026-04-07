@@ -3,17 +3,20 @@ import axios from 'axios';
 import { AuthContext } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import './AllOrders.css';
+import { apiUrl } from '../api';
 
 const AllOrders = () => {
   const [orders, setOrders] = useState([]);
   const [filterUser, setFilterUser] = useState(''); // ✅ new state for user name filter
   const { user } = useContext(AuthContext);
   const navigate = useNavigate();
+  const mapLink = (location) =>
+    `https://www.google.com/maps?q=${location.latitude},${location.longitude}`;
 
   useEffect(() => {
     const fetchAllOrders = async () => {
       try {
-        const response = await axios.get('https://bookshope.onrender.com/api/all-orders', {
+        const response = await axios.get(apiUrl('/api/all-orders'), {
           headers: {
             Authorization: `Bearer ${user.token}`,
           },
@@ -60,6 +63,25 @@ const AllOrders = () => {
               <p>User: {order.userId?.username || 'Unknown User'}</p>
               <p>Date: {new Date(order.createdAt).toLocaleDateString()}</p>
               <p>Total: ₹{order.total.toFixed(2)}</p>
+              {order.deliveryLocation?.latitude && order.deliveryLocation?.longitude ? (
+                <>
+                  <p>
+                    Location: {order.deliveryLocation.latitude}, {order.deliveryLocation.longitude}
+                  </p>
+                  <p>
+                    Accuracy: {order.deliveryLocation.accuracy
+                      ? `${order.deliveryLocation.accuracy} m`
+                      : 'Unavailable'}
+                  </p>
+                  <p>
+                    <a href={mapLink(order.deliveryLocation)} target="_blank" rel="noreferrer">
+                      Open in Map
+                    </a>
+                  </p>
+                </>
+              ) : (
+                <p>Location: Not captured</p>
+              )}
               <ul>
                 {order.items
                   .filter((item) => item.bookId)

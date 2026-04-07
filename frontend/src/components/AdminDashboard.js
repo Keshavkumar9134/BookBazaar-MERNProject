@@ -6,6 +6,7 @@ import UpdateBookForm from './UpdateBookForm';
 import './AdminDashboard.css';
 import AdminSearchBar from './AdminSearchBar';
 import AdminFilterBar from './AdminFilterBar';
+import { apiUrl } from '../api';
 
 const AdminDashboard = () => {
   const [selectedBook, setSelectedBook] = useState(null);
@@ -29,7 +30,7 @@ const AdminDashboard = () => {
 
   const fetchBooks = async () => {
     try {
-      const response = await axios.get('https://bookshope.onrender.com/api/books');
+      const response = await axios.get(apiUrl('/api/books'));
       setBooks(response.data);
       setFilteredBooks(response.data);
     } catch (err) {
@@ -61,7 +62,7 @@ const AdminDashboard = () => {
 
   const handleDeleteBook = async (bookId) => {
     try {
-      await axios.delete(`https://bookshope.onrender.com/api/books/${bookId}`, {
+      await axios.delete(apiUrl(`/api/books/${bookId}`), {
         headers: {
           Authorization: `Bearer ${user.token}`,
         },

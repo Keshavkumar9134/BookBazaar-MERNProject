@@ -169,3 +169,58 @@
   background-color: #2980b9;
   transform: scale(1.1);
 }
+
+/* Visibility fixes for cart page */
+.cart-container {
+  background: #f8fbff;
+  color: #18212f;
+}
+
+.cart-container .cart-header h1,
+.cart-container .total-price {
+  color: #162033;
+}
+
+.cart-container .empty-cart {
+  color: #42536a;
+}
+
+.cart-container .cart-item {
+  background: #ffffff;
+  border: 1px solid #d8e2f0;
+  color: #18212f;
+}
+
+.cart-container .cart-item .book-details,
+.cart-container .cart-item .book-details h2 {
+  color: #162033 !important;
+}
+
+.cart-container .cart-item .book-details p {
+  color: #42536a !important;
+}
+
+@media (prefers-color-scheme: dark) {
+  .cart-container {
+    background: #0d1420;
+    color: #eef4ff;
+  }
+
+  .cart-container .cart-header h1,
+  .cart-container .total-price,
+  .cart-container .cart-item .book-details,
+  .cart-container .cart-item .book-details h2 {
+    color: #f4f8ff !important;
+  }
+
+  .cart-container .empty-cart,
+  .cart-container .cart-item .book-details p {
+    color: #d4deed !important;
+  }
+
+  .cart-container .cart-item {
+    background: #172233;
+    border-color: #2c3d57;
+    color: #eef4ff;
+  }
+}

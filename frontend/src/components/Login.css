@@ -124,3 +124,21 @@
   text-align: center;
   border: 1px solid #ff4d4f;
 }
+
+.success-message {
+  color: #d7ffe0;
+  background-color: rgba(33, 150, 83, 0.18);
+  padding: 0.8rem 1rem;
+  margin-bottom: 1rem;
+  border-radius: 6px;
+  font-weight: 600;
+  text-align: center;
+  border: 1px solid #5f9d60;
+}
+
+.login-divider {
+  margin-top: 16px;
+  color: #f2f2f2;
+  font-size: 13px;
+  line-height: 1.5;
+}

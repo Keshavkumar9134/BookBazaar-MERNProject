@@ -3,16 +3,19 @@ import axios from 'axios';
 import Header from './Header';
 import { AuthContext } from '../context/AuthContext';
 import './OrderHistory.css'; // Optional: Add styles for this component
+import { apiUrl } from '../api';
 
 const OrderHistory = () => {
   const [orders, setOrders] = useState([]);
   const { user } = useContext(AuthContext);
+  const mapLink = (location) =>
+    `https://www.google.com/maps?q=${location.latitude},${location.longitude}`;
 
   useEffect(() => {
     const fetchOrderHistory = async () => {
       try {
         console.log('Fetching order history for user:', user);
-        const response = await axios.get('https://bookshope.onrender.com/api/orders', {
+        const response = await axios.get(apiUrl('/api/orders'), {
           headers: {
             Authorization: `Bearer ${user.token}`,
           },
@@ -63,6 +66,37 @@ const OrderHistory = () => {
                     <span className="order-value">₹{order.total.toFixed(2)}</span>
                   </div>
                 </div>
+                {order.deliveryLocation?.latitude && order.deliveryLocation?.longitude ? (
+                  <div className="order-location">
+                    <div>
+                      <span className="order-label">Delivery Location:</span>{' '}
+                      <span className="order-value">
+                        {order.deliveryLocation.latitude}, {order.deliveryLocation.longitude}
+                      </span>
+                    </div>
+                    <div>
+                      <span className="order-label">Accuracy:</span>{' '}
+                      <span className="order-value">
+                        {order.deliveryLocation.accuracy
+                          ? `${order.deliveryLocation.accuracy} m`
+                          : 'Unavailable'}
+                      </span>
+                    </div>
+                    <a
+                      href={mapLink(order.deliveryLocation)}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="map-link"
+                    >
+                      Open in Map
+                    </a>
+                  </div>
+                ) : (
+                  <div className="order-location">
+                    <span className="order-label">Delivery Location:</span>{' '}
+                    <span className="order-value">Not captured for this order</span>
+                  </div>
+                )}
                 <ul className="order-books-list">
                   {order.items
                     .filter((item) => item.bookId)

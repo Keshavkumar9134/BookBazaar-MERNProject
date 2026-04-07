@@ -75,9 +75,13 @@ router.post('/clear', authMiddleware, async (req, res) => {
   // checkout
   router.post('/checkout', authMiddleware, async (req, res) => {
     try {
+      const { deliveryLocation } = req.body;
       console.log('Checkout request received for user:', req.user.id); // Log the user ID
       const user = await User.findById(req.user.id).populate('cart.bookId');
       if (!user) return res.status(404).json({ message: 'User not found' });
+      if (!deliveryLocation || typeof deliveryLocation.latitude !== 'number' || typeof deliveryLocation.longitude !== 'number') {
+        return res.status(400).json({ message: 'Delivery location is required for checkout.' });
+      }
   
       console.log('User cart:', user.cart); // Log the user's cart
   
@@ -106,6 +110,13 @@ router.post('/clear', authMiddleware, async (req, res) => {
         price: item.bookId.price,
       })),
       total,
+      deliveryLocation: {
+        latitude: deliveryLocation.latitude,
+        longitude: deliveryLocation.longitude,
+        accuracy: deliveryLocation.accuracy ?? null,
+        source: deliveryLocation.source || 'browser-geolocation',
+        capturedAt: new Date(),
+      },
     });
 
     // Save the order to the database

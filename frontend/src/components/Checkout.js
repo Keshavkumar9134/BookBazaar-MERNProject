@@ -1,13 +1,18 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useMemo, useState } from 'react';
 import { CartContext } from '../context/CartContext';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './Checkout.css';
+import { apiUrl } from '../api';
 
 const Checkout = () => {
   const { cart, clearCart } = useContext(CartContext);
   const [orderConfirmed, setOrderConfirmed] = useState(false);
   const [orderDetails, setOrderDetails] = useState(null);
+  const [locationData, setLocationData] = useState(null);
+  const [locationError, setLocationError] = useState('');
+  const [isLocating, setIsLocating] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const navigate = useNavigate();
 
   const subtotal = cart.reduce((total, item) => {
@@ -21,22 +26,85 @@ const Checkout = () => {
   const discount = subtotal > 1000 ? subtotal * 0.05 : 0;
   const total = subtotal + tax - discount;
 
+  const mapSrc = useMemo(() => {
+    if (!locationData) {
+      return '';
+    }
+
+    const { latitude, longitude } = locationData;
+    const offset = 0.01;
+    const bbox = [
+      longitude - offset,
+      latitude - offset,
+      longitude + offset,
+      latitude + offset,
+    ].join('%2C');
+
+    return `https://www.openstreetmap.org/export/embed.html?bbox=${bbox}&layer=mapnik&marker=${latitude}%2C${longitude}`;
+  }, [locationData]);
+
+  const handleUseMyLocation = () => {
+    if (!navigator.geolocation) {
+      setLocationError('Geolocation is not supported in this browser.');
+      return;
+    }
+
+    setIsLocating(true);
+    setLocationError('');
+
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        setLocationData({
+          latitude: Number(position.coords.latitude.toFixed(6)),
+          longitude: Number(position.coords.longitude.toFixed(6)),
+          accuracy: position.coords.accuracy ? Math.round(position.coords.accuracy) : null,
+          source: 'browser-geolocation',
+        });
+        setIsLocating(false);
+      },
+      (error) => {
+        setLocationError(error.message || 'Unable to fetch your location.');
+        setIsLocating(false);
+      },
+      {
+        enableHighAccuracy: true,
+        timeout: 10000,
+        maximumAge: 0,
+      }
+    );
+  };
+
   const handleBuyNow = async () => {
     try {
       const user = JSON.parse(localStorage.getItem('user'));
       if (!user?.token) throw new Error('User not logged in');
+      if (!locationData) {
+        setLocationError('Please use your location before placing the order.');
+        return;
+      }
 
+      setIsSubmitting(true);
       await axios.post(
-        'https://bookshope.onrender.com/api/cart/checkout',
-        {},
+        apiUrl('/api/cart/checkout'),
+        { deliveryLocation: locationData },
         { headers: { Authorization: `Bearer ${user.token}` } }
       );
 
-      setOrderDetails({ cart: JSON.parse(JSON.stringify(cart)), subtotal, tax, discount, total });
+      setOrderDetails({
+        cart: JSON.parse(JSON.stringify(cart)),
+        subtotal,
+        tax,
+        discount,
+        total,
+        deliveryLocation: locationData,
+      });
       setOrderConfirmed(true);
       clearCart();
     } catch (err) {
+      setLocationError(err.response?.data?.message || 'Checkout failed. Please try again.');
       console.error('Checkout error:', err.response?.data || err.message);
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -89,9 +157,50 @@ const Checkout = () => {
             <h3>Total: ₹{total.toFixed(2)}</h3>
           </div>
 
+          <div className="location-box">
+            <div className="location-header">
+              <h3>Delivery Location</h3>
+              <button
+                type="button"
+                className="btn-primary"
+                onClick={handleUseMyLocation}
+                disabled={isLocating}
+              >
+                {isLocating ? 'Locating...' : 'Use My Location'}
+              </button>
+            </div>
+            <p className="location-copy">
+              Capture your current browser location before placing the order.
+            </p>
+            {locationData ? (
+              <>
+                <div className="location-meta">
+                  <span>Latitude: {locationData.latitude}</span>
+                  <span>Longitude: {locationData.longitude}</span>
+                  <span>
+                    Accuracy: {locationData.accuracy ? `${locationData.accuracy} m` : 'Unavailable'}
+                  </span>
+                </div>
+                <div className="map-frame">
+                  <iframe
+                    title="Delivery location map"
+                    src={mapSrc}
+                    loading="lazy"
+                    referrerPolicy="no-referrer-when-downgrade"
+                  />
+                </div>
+              </>
+            ) : (
+              <p className="location-pending">Location not captured yet.</p>
+            )}
+            {locationError && <p className="location-error">{locationError}</p>}
+          </div>
+
           <div className="checkout-actions">
             <button onClick={() => navigate('/cart')} className="btn-secondary">Back</button>
-            <button onClick={handleBuyNow} className="btn-primary">Buy Now</button>
+            <button onClick={handleBuyNow} className="btn-primary" disabled={isSubmitting || isLocating}>
+              {isSubmitting ? 'Placing Order...' : 'Buy Now'}
+            </button>
           </div>
         </>
       ) : (
@@ -123,6 +232,13 @@ const Checkout = () => {
               <p>Discount: ₹{orderDetails.discount.toFixed(2)}</p>
               <h3>Total Paid: ₹{orderDetails.total.toFixed(2)}</h3>
             </div>
+            {orderDetails.deliveryLocation && (
+              <div className="summary-box">
+                <h3>Saved Delivery Location</h3>
+                <p>Latitude: {orderDetails.deliveryLocation.latitude}</p>
+                <p>Longitude: {orderDetails.deliveryLocation.longitude}</p>
+              </div>
+            )}
           </div>
           <button onClick={() => navigate('/shop')} className="btn-primary">
             Continue Shopping

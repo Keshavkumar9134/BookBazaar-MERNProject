@@ -3,6 +3,7 @@ import axios from 'axios';
 import { AuthContext } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import './PutOnSale.css';
+import { apiUrl } from '../api';
 
 const PutOnSale = () => {
   const [books, setBooks] = useState([]);
@@ -16,7 +17,7 @@ const PutOnSale = () => {
 
   const fetchBooks = async () => {
     try {
-      const response = await axios.get('https://bookshope.onrender.com/api/books');
+      const response = await axios.get(apiUrl('/api/books'));
       setBooks(response.data);
 
       // ✅ Pre-fill discounts with existing discount from DB
@@ -47,7 +48,7 @@ const PutOnSale = () => {
       }
 
       await axios.patch(
-        `https://bookshope.onrender.com/api/books/${bookId}/sale`,
+        apiUrl(`/api/books/${bookId}/sale`),
         { discount: discount },
         {
           headers: {
@@ -66,7 +67,7 @@ const PutOnSale = () => {
   const handleRemoveSale = async (bookId) => {
     try {
       await axios.patch(
-        `https://bookshope.onrender.com/api/books/${bookId}/remove-sale`,
+        apiUrl(`/api/books/${bookId}/remove-sale`),
         {},
         {
           headers: {
