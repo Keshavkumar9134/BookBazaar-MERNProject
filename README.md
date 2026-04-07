@@ -1,22 +1,22 @@
-# 📚 BookBazaar
+#  BookBazaar MERN Project
 
-**BookBazaar** is a MERN stack web application that allows users to explore, buy, and manage their favorite books with ease.
+A full-stack Book Store application built using MERN stack.
 
-## 🚀 Features
+## Features
+- User Authentication (Login/Register)
+- Email OTP Verification
+- Add to Cart & Order System
+- Admin Panel (CRUD operations)
+- Search & Filter Books
+- File Upload System
+- Real-time Chat
+- Notifications
 
-- 🛍️ Browse and purchase books
-- 🔍 Search by title, author, or genre
-- 🧾 View detailed book information
-- 🛒 Add books to cart
-- 👤 User authentication (Register/Login)
-- 🧑‍💼 Admin dashboard to manage books
+##  Tech Stack
+- Frontend: React.js
+- Backend: Node.js, Express.js
+- Database: MongoDB
 
-## 🛠️ Tech Stack
-
-- **Frontend**: React, Axios, TailwindCSS
-- **Backend**: Node.js, Express.js
-- **Database**: MongoDB
-- **Authentication**: JWT-based auth
-- **Deployment**: Render
-
-
+##  Folder Structure
+- /frontend → React app
+- /backend → API server
