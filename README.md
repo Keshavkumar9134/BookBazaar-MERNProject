@@ -9,7 +9,8 @@ A full-stack Book Store application built using MERN stack.
 - Admin Panel (CRUD operations)
 - Search & Filter Books
 - File Upload System
-- Real-time Chat
+- Geo-location map for order location
+- Real-time Chat System Between Users
 - Notifications
 
 ##  Tech Stack
