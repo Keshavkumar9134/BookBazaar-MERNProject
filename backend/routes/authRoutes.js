@@ -221,11 +221,16 @@ router.post('/login-otp/verify', async (req, res) => {
   }
 });
 
-// Login
+// Login with email and password
 router.post('/login', async (req, res) => {
-  const { username, password } = req.body;
+  const { email, password } = req.body;
+
+  if (!email || !password) {
+    return res.status(400).json({ message: 'Email and password are required.' });
+  }
+
   try {
-    const user = await User.findOne({ username });
+    const user = await User.findOne({ email: email.toLowerCase().trim() });
     if (!user) return res.status(400).json({ message: 'User not found' });
     if (!user.isVerified) {
       return res.status(403).json({ message: 'Please verify your email before logging in.' });

@@ -1,7 +1,21 @@
 const jwt = require('jsonwebtoken');
 
+const resolveAuthToken = (req) => {
+  const headerToken = req.header('Authorization')?.replace('Bearer ', '');
+
+  if (headerToken) {
+    return headerToken;
+  }
+
+  if (typeof req.query.token === 'string' && req.query.token.trim()) {
+    return req.query.token.trim();
+  }
+
+  return null;
+};
+
 const authMiddleware = (req, res, next) => {
-  const token = req.header('Authorization')?.replace('Bearer ', '');
+  const token = resolveAuthToken(req);
   if (!token) return res.status(401).json({ message: 'Access denied' });
 
   try {
@@ -18,4 +32,4 @@ const isAdmin = (req, res, next) => {
   next();
 };
 
-module.exports = { authMiddleware, isAdmin };
+module.exports = { authMiddleware, isAdmin, resolveAuthToken };

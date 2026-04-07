@@ -90,6 +90,16 @@ nav a:hover::after {
   transition: color 0.2s;
 }
 
+.logo-image {
+  width: 42px;
+  height: 42px;
+  object-fit: contain;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.12);
+  padding: 4px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
 .logo-text {
   font-family: 'Segoe UI', 'Arial', sans-serif;
   font-weight: 800;
@@ -171,6 +181,10 @@ nav a:hover::after {
     margin-left: 0.7rem;
     margin-right: 2rem;
     font-size: 1.5rem;
+  }
+  .logo-image {
+    width: 36px;
+    height: 36px;
   }
   .nav-links {
     position: fixed;

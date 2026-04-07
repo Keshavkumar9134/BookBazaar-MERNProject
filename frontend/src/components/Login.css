@@ -28,6 +28,29 @@
   color: #333;
 }
 
+.login-tabs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.login-tab {
+  padding: 10px 12px;
+  border-radius: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.login-tab.active {
+  background-color: #5f9d60;
+  border-color: #5f9d60;
+}
+
 .input-group {
   margin-bottom: 20px;
   text-align: left;

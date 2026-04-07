@@ -23,14 +23,17 @@ const Header = () => {
   return (
     <header className="main-header">
       <div className="logo" onClick={() => handleNavClick('/home1')}>
-        <span role="img" aria-label="book">📚</span>
-        <span className="logo-text">BookShope</span>
+        <img src="/icon.png" alt="BookBazaar logo" className="logo-image" />
+        <span className="logo-text">BookBazaar</span>
       </div>
       <nav className={`nav-links ${menuOpen ? 'open' : ''}`}>
         <Link to="/home1" onClick={() => setMenuOpen(false)}>Home</Link>
         <Link to="/shop" onClick={() => setMenuOpen(false)}>Shop</Link>
         <Link to="/cart" onClick={() => setMenuOpen(false)}>Cart</Link>
         <Link to="/order-history" onClick={() => setMenuOpen(false)}>Orders</Link>
+        {user && (
+          <Link to="/chat" onClick={() => setMenuOpen(false)}>Chat</Link>
+        )}
         <Link to="/about" onClick={() => setMenuOpen(false)}>About Us</Link>
         {!user && (
           <Link to="/login" onClick={() => setMenuOpen(false)}>Login</Link>

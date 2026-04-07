@@ -13,9 +13,10 @@ import Checkout from './components/Checkout';
 import OrderHistory from './components/OrderHistory';
 import AllOrders from './components/AllOrders';
 import AddBookForm from './components/AddBookForm';
-import PutOnSale from './components/PutOnSale'; // ✅ ADDED IMPORT
-import './App.css';
+import PutOnSale from './components/PutOnSale';
 import About from './components/About';
+import ChatPage from './components/ChatPage';
+import './App.css';
 
 const App = () => {
   return (
@@ -35,7 +36,8 @@ const App = () => {
             <Route path="/all-orders" element={<AllOrders />} />
             <Route path="/add-book" element={<AddBookForm />} />
             <Route path="/about" element={<About />} />
-            <Route path="/put-on-sale" element={<PutOnSale />} /> {/* ✅ NEW ROUTE */}
+            <Route path="/put-on-sale" element={<PutOnSale />} />
+            <Route path="/chat" element={<ChatPage />} />
           </Routes>
         </Router>
       </CartProvider>
