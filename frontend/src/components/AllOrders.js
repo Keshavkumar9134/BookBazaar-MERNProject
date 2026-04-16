@@ -7,7 +7,7 @@ import { apiUrl } from '../api';
 
 const AllOrders = () => {
   const [orders, setOrders] = useState([]);
-  const [filterUser, setFilterUser] = useState(''); // ✅ new state for user name filter
+  const [filterUser, setFilterUser] = useState('');
   const { user } = useContext(AuthContext);
   const navigate = useNavigate();
   const mapLink = (location) =>
@@ -32,7 +32,6 @@ const AllOrders = () => {
     }
   }, [user]);
 
-  // ✅ Filter orders based on filterUser
   const filteredOrders = orders.filter((order) =>
     order.userId?.username?.toLowerCase().includes(filterUser.toLowerCase())
   );
@@ -44,7 +43,6 @@ const AllOrders = () => {
       </button>
       <h1>All Orders</h1>
 
-      {/* ✅ Search input */}
       <input
         type="text"
         placeholder="Filter by username..."
@@ -62,11 +60,16 @@ const AllOrders = () => {
               <h2>Order ID: {order._id}</h2>
               <p>User: {order.userId?.username || 'Unknown User'}</p>
               <p>Date: {new Date(order.createdAt).toLocaleDateString()}</p>
-              <p>Total: ₹{order.total.toFixed(2)}</p>
+              <p>Total: Rs. {order.total.toFixed(2)}</p>
+              <p>
+                Payment: {order.paymentMethod === 'online' ? 'Online Payment' : 'Cash on Delivery'}
+              </p>
               {order.deliveryLocation?.latitude && order.deliveryLocation?.longitude ? (
                 <>
+                  <p>Place: {order.deliveryLocation.placeName || 'Current location detected'}</p>
+                  <p>Address: {order.deliveryLocation.addressText || 'No manual address saved'}</p>
                   <p>
-                    Location: {order.deliveryLocation.latitude}, {order.deliveryLocation.longitude}
+                    Coords: {order.deliveryLocation.latitude}, {order.deliveryLocation.longitude}
                   </p>
                   <p>
                     Accuracy: {order.deliveryLocation.accuracy
@@ -87,7 +90,7 @@ const AllOrders = () => {
                   .filter((item) => item.bookId)
                   .map((item) => (
                     <li key={item.bookId._id}>
-                      {item.bookId.title} - {item.quantity} x ₹{item.bookId.price}
+                      {item.bookId.title} - {item.quantity} x Rs. {item.bookId.price}
                     </li>
                   ))}
               </ul>

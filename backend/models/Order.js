@@ -16,7 +16,19 @@ const OrderSchema = new mongoose.Schema({
     longitude: { type: Number, default: null },
     accuracy: { type: Number, default: null },
     source: { type: String, default: 'browser-geolocation' },
+    placeName: { type: String, default: '' },
+    addressText: { type: String, default: '' },
     capturedAt: { type: Date, default: null },
+  },
+  paymentMethod: {
+    type: String,
+    enum: ['cod', 'online'],
+    default: 'cod',
+  },
+  paymentStatus: {
+    type: String,
+    enum: ['pending', 'cod-pending', 'paid-online'],
+    default: 'pending',
   },
   createdAt: { type: Date, default: Date.now }, // Order creation date
 });

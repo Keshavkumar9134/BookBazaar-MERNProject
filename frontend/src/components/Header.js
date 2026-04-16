@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import './Header.css';
 import { AuthContext } from '../context/AuthContext';
 
@@ -27,16 +27,16 @@ const Header = () => {
         <span className="logo-text">BookBazaar</span>
       </div>
       <nav className={`nav-links ${menuOpen ? 'open' : ''}`}>
-        <Link to="/home1" onClick={() => setMenuOpen(false)}>Home</Link>
-        <Link to="/shop" onClick={() => setMenuOpen(false)}>Shop</Link>
-        <Link to="/cart" onClick={() => setMenuOpen(false)}>Cart</Link>
-        <Link to="/order-history" onClick={() => setMenuOpen(false)}>Orders</Link>
+        <NavLink to="/home1" onClick={() => setMenuOpen(false)}>Home</NavLink>
+        <NavLink to="/shop" onClick={() => setMenuOpen(false)}>Shop</NavLink>
+        <NavLink to="/cart" onClick={() => setMenuOpen(false)}>Cart</NavLink>
+        <NavLink to="/order-history" onClick={() => setMenuOpen(false)}>Orders</NavLink>
         {user && (
-          <Link to="/chat" onClick={() => setMenuOpen(false)}>Chat</Link>
+          <NavLink to="/chat" onClick={() => setMenuOpen(false)}>Contact</NavLink>
         )}
-        <Link to="/about" onClick={() => setMenuOpen(false)}>About Us</Link>
+        <NavLink to="/about" onClick={() => setMenuOpen(false)}>About Us</NavLink>
         {!user && (
-          <Link to="/login" onClick={() => setMenuOpen(false)}>Login</Link>
+          <NavLink to="/login" onClick={() => setMenuOpen(false)}>Login</NavLink>
         )}
         {user && (
           <button className="logout-btn" onClick={handleLogout}>Logout</button>
@@ -52,3 +52,4 @@ const Header = () => {
 };
 
 export default Header;
+

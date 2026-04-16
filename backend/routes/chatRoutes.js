@@ -36,6 +36,16 @@ const getConversation = (firstUserId, secondUserId) =>
     participants: { $all: [firstUserId, secondUserId], $size: 2 },
   });
 
+const findChatRecipient = async (otherUserId, currentUserId) => {
+  const recipient = await User.findOne({
+    _id: otherUserId,
+    _id: { $ne: currentUserId },
+    isVerified: true,
+  }).select('username email role');
+
+  return recipient;
+};
+
 router.get('/chat/stream', (req, res) => {
   const token = resolveAuthToken(req);
 
@@ -107,11 +117,7 @@ router.get('/chat/conversations', authMiddleware, async (req, res) => {
 
 router.get('/chat/messages/:otherUserId', authMiddleware, async (req, res) => {
   try {
-    const otherUser = await User.findOne({
-      _id: req.params.otherUserId,
-      isVerified: true,
-      role: 'user',
-    }).select('username email role');
+    const otherUser = await findChatRecipient(req.params.otherUserId, req.user.id);
 
     if (!otherUser) {
       return res.status(404).json({ message: 'User not found' });
@@ -150,11 +156,7 @@ router.post('/chat/messages/:otherUserId', authMiddleware, async (req, res) => {
       return res.status(400).json({ message: 'Message content is required' });
     }
 
-    const otherUser = await User.findOne({
-      _id: req.params.otherUserId,
-      isVerified: true,
-      role: 'user',
-    }).select('username email role');
+    const otherUser = await findChatRecipient(req.params.otherUserId, req.user.id);
 
     if (!otherUser) {
       return res.status(404).json({ message: 'Recipient not found' });

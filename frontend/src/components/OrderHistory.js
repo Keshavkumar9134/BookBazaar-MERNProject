@@ -2,7 +2,7 @@ import React, { useEffect, useState, useContext } from 'react';
 import axios from 'axios';
 import Header from './Header';
 import { AuthContext } from '../context/AuthContext';
-import './OrderHistory.css'; // Optional: Add styles for this component
+import './OrderHistory.css';
 import { apiUrl } from '../api';
 
 const OrderHistory = () => {
@@ -14,18 +14,16 @@ const OrderHistory = () => {
   useEffect(() => {
     const fetchOrderHistory = async () => {
       try {
-        console.log('Fetching order history for user:', user);
         const response = await axios.get(apiUrl('/api/orders'), {
           headers: {
             Authorization: `Bearer ${user.token}`,
           },
         });
-        console.log('Order history response:', response.data);
         setOrders(response.data);
       } catch (err) {
         console.error('Error fetching order history:', err);
       }
-    }
+    };
 
     if (user) {
       fetchOrderHistory();
@@ -63,15 +61,21 @@ const OrderHistory = () => {
                   </div>
                   <div>
                     <span className="order-label">Total:</span>
-                    <span className="order-value">₹{order.total.toFixed(2)}</span>
+                    <span className="order-value">Rs. {order.total.toFixed(2)}</span>
                   </div>
                 </div>
                 {order.deliveryLocation?.latitude && order.deliveryLocation?.longitude ? (
                   <div className="order-location">
                     <div>
-                      <span className="order-label">Delivery Location:</span>{' '}
+                      <span className="order-label">Delivery Place:</span>{' '}
                       <span className="order-value">
-                        {order.deliveryLocation.latitude}, {order.deliveryLocation.longitude}
+                        {order.deliveryLocation.placeName || 'Current location detected'}
+                      </span>
+                    </div>
+                    <div>
+                      <span className="order-label">Saved Address:</span>{' '}
+                      <span className="order-value">
+                        {order.deliveryLocation.addressText || 'No manual address saved'}
                       </span>
                     </div>
                     <div>
@@ -80,6 +84,12 @@ const OrderHistory = () => {
                         {order.deliveryLocation.accuracy
                           ? `${order.deliveryLocation.accuracy} m`
                           : 'Unavailable'}
+                      </span>
+                    </div>
+                    <div>
+                      <span className="order-label">Payment:</span>{' '}
+                      <span className="order-value">
+                        {order.paymentMethod === 'online' ? 'Online Payment' : 'Cash on Delivery'}
                       </span>
                     </div>
                     <a
@@ -103,8 +113,8 @@ const OrderHistory = () => {
                     .map((item) => (
                       <li key={item.bookId._id} className="order-book-item">
                         <span className="book-title">{item.bookId.title}</span>
-                        <span className="book-qty">× {item.quantity}</span>
-                        <span className="book-price">₹{item.bookId.price}</span>
+                        <span className="book-qty">x {item.quantity}</span>
+                        <span className="book-price">Rs. {item.bookId.price}</span>
                       </li>
                     ))}
                 </ul>
