@@ -1,14 +1,17 @@
 /* PutOnSale.css */
 
 .put-on-sale-page {
-  padding: 20px;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 2rem 1.25rem 4rem;
   background-color: #f4efe6;
   min-height: 100vh;
+  box-sizing: border-box;
 }
 
 .put-on-sale-page h1 {
   text-align: center;
-  margin-bottom: 20px;
+  margin-bottom: 1.25rem;
   color: black;
 }
 
@@ -25,63 +28,81 @@
 
 .sale-book-list {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-  gap: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 300px));
+  justify-content: center;
+  gap: 1.5rem;
+  align-items: stretch;
 }
 
 .sale-book-item {
   background-color: white;
-  border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 24px;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  box-shadow: 0 10px 24px rgba(20, 32, 51, 0.1);
   overflow: hidden;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding: 15px;
+  width: 100%;
+  padding: 1.1rem;
+  box-sizing: border-box;
+  transition: transform 0.22s ease, box-shadow 0.22s ease;
+}
+
+.sale-book-item:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 16px 28px rgba(20, 32, 51, 0.14);
 }
 
 .sale-book-image {
   width: 100%;
   height: 240px;
   object-fit: cover;
-  border-radius: 6px;
+  border-radius: 18px;
 }
 
 .sale-book-info {
-  margin-top: 10px;
+  margin-top: 1rem;
   display: flex;
   flex-direction: column;
   flex-grow: 1;
+  gap: 0.75rem;
   color: black !important;
 }
 
 .sale-book-info h3 {
-  margin: 10px 0 5px 0;
-  font-size: 16px;
+  margin: 0;
+  font-size: 1.2rem;
+  line-height: 1.35;
   color: black !important;
 }
 
 .sale-book-info p {
-  margin: 0 0 10px 0;
+  margin: 0;
   font-weight: bold;
+  line-height: 1.6;
   color: black !important;
 }
 
 .sale-book-info input {
-  padding: 8px;
-  margin-bottom: 10px;
+  width: 100%;
+  padding: 0.85rem 0.95rem;
   border: 1px solid #ccc;
-  border-radius: 4px;
+  border-radius: 12px;
+  box-sizing: border-box;
 }
 
 .sale-book-info button {
-  padding: 8px 10px;
-  margin: 4px 0;
+  width: 100%;
+  padding: 0.9rem 1rem;
+  margin: 0;
   background-color: #dc3545; /* Red for remove */
   color: white;
   border: none;
-  border-radius: 4px;
+  border-radius: 14px;
+  font-weight: 700;
   cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
 }
 
 .sale-book-info button:first-of-type {
@@ -89,5 +110,20 @@
 }
 
 .sale-book-info button:hover {
-  opacity: 0.9;
+  opacity: 0.95;
+  transform: translateY(-1px);
+}
+
+@media (max-width: 640px) {
+  .put-on-sale-page {
+    padding-inline: 1rem;
+  }
+
+  .sale-book-list {
+    grid-template-columns: minmax(260px, 320px);
+  }
+
+  .sale-book-image {
+    height: 220px;
+  }
 }

@@ -43,7 +43,7 @@ const Checkout = () => {
     return total + price * item.quantity;
   }, 0);
 
-  const tax = subtotal * 0.12;
+  const tax = subtotal * 0.18;
   const discount = subtotal > 1000 ? subtotal * 0.05 : 0;
   const total = subtotal + tax - discount;
 
@@ -280,7 +280,7 @@ const Checkout = () => {
           <div className="summary-box">
             <h3>Order Summary</h3>
             <p>Subtotal: {formatCurrency(subtotal)}</p>
-            <p>Tax (12%): {formatCurrency(tax)}</p>
+            <p>Tax (18%): {formatCurrency(tax)}</p>
             <p>Discount (5%): {formatCurrency(discount)}</p>
             <h3>Total: {formatCurrency(total)}</h3>
           </div>

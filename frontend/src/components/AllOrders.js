@@ -38,18 +38,22 @@ const AllOrders = () => {
 
   return (
     <div className="all-orders">
+            <h1>All Orders</h1>
+
       <button className="back-button" onClick={() => navigate('/admin')}>
         Back to Dashboard
       </button>
-      <h1>All Orders</h1>
 
+      <div className='search-Orders-container'>
       <input
         type="text"
+        name='searchFliterOrders'
         placeholder="Filter by username..."
         value={filterUser}
         onChange={(e) => setFilterUser(e.target.value)}
         className="filter-input"
       />
+      </div>
 
       {filteredOrders.length === 0 ? (
         <p>No orders found.</p>
@@ -58,21 +62,21 @@ const AllOrders = () => {
           {filteredOrders.map((order) => (
             <li key={order._id} className="order-item">
               <h2>Order ID: {order._id}</h2>
-              <p>User: {order.userId?.username || 'Unknown User'}</p>
-              <p>Date: {new Date(order.createdAt).toLocaleDateString()}</p>
-              <p>Total: Rs. {order.total.toFixed(2)}</p>
+              <p><strong>User: </strong> {order.userId?.username || 'Unknown User'}</p>
+              <p><strong>Date: </strong> {new Date(order.createdAt).toLocaleDateString()}</p>
+              <p><strong>Total: </strong>Rs.{order.total.toFixed(2)}</p>
               <p>
-                Payment: {order.paymentMethod === 'online' ? 'Online Payment' : 'Cash on Delivery'}
+                <strong>Payment: </strong> {order.paymentMethod === 'online' ? 'Online Payment' : 'Cash on Delivery'}
               </p>
               {order.deliveryLocation?.latitude && order.deliveryLocation?.longitude ? (
                 <>
-                  <p>Place: {order.deliveryLocation.placeName || 'Current location detected'}</p>
-                  <p>Address: {order.deliveryLocation.addressText || 'No manual address saved'}</p>
+      
+                  <p><strong>Address:</strong> {order.deliveryLocation.addressText || 'No manual address saved'}</p>
                   <p>
-                    Coords: {order.deliveryLocation.latitude}, {order.deliveryLocation.longitude}
+                    <strong>Coords:</strong> {order.deliveryLocation.latitude}, {order.deliveryLocation.longitude}
                   </p>
                   <p>
-                    Accuracy: {order.deliveryLocation.accuracy
+                    <strong>Accuracy:</strong> {order.deliveryLocation.accuracy
                       ? `${order.deliveryLocation.accuracy} m`
                       : 'Unavailable'}
                   </p>

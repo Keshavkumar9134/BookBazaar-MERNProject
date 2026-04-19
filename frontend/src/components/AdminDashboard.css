@@ -14,7 +14,7 @@
   align-items: center;
   gap: 1rem;
   flex-wrap: wrap;
-  background: rgba(20, 32, 51, 0.92);
+  background:#e7e9fffc;
   color: #fff8eb;
   border-radius: 28px;
   box-shadow: var(--shadow-md);
@@ -70,7 +70,7 @@
 
 .logout-button,
 .put-on-sale-btn {
-  background: linear-gradient(135deg, #b7791f 0%, #975f14 100%);
+  background-color: #234e52;
   box-shadow: 0 12px 22px rgba(183, 121, 31, 0.22);
 }
 

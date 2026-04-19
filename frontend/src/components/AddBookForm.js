@@ -40,6 +40,9 @@ const AddBookForm = () => {
     <div className='container'>
     <div className="add-book-form">
       <h1 class="nm">Add New Book</h1>
+      <button className="back-button" onClick={() => navigate('/admin')}>
+        Back to Dashboard
+      </button>
       <form onSubmit={handleSubmit}>
         <input
           type="text"
@@ -91,7 +94,7 @@ const AddBookForm = () => {
           value={formData.quantity}
           onChange={handleChange}
         />
-        <button type="submit">Add Book</button>
+        <button id='add-btn' type="submit">Add Book</button>
       </form>
     </div>
     </div>

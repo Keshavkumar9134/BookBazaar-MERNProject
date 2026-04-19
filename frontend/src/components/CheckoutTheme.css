@@ -73,7 +73,7 @@
 .checkout .order-confirmation p,
 .checkout .order-item p {
   color: var(--text-muted) !important;
-  line-height: 1.65;
+  line-height: 2.65;
 }
 
 .checkout .strikethrough {

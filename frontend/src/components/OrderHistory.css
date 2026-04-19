@@ -33,14 +33,14 @@
   
   /* Order Card */
   .order-item {
-    background: #6c757d;
+    background: #758a9c64;
     border-radius: 18px;
     box-shadow: 0 4px 24px rgba(10,26,60,0.18);
     padding: 1.5rem 2rem 1.2rem 2rem;
     margin-bottom: 2.2rem;
     width: 100%;
     max-width: 720px;
-    border: 1.5px solid #b31217;
+    border: 1.5px solid #e7e4bc3f;
     position: relative;
     transition: box-shadow 0.2s, transform 0.2s, border 0.2s;
     cursor: pointer;
