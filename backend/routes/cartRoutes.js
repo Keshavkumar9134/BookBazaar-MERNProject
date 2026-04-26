@@ -75,9 +75,6 @@ router.post('/checkout', authMiddleware, async (req, res) => {
     const { deliveryLocation, paymentMethod } = req.body;
     const user = await User.findById(req.user.id).populate('cart.bookId');
     if (!user) return res.status(404).json({ message: 'User not found' });
-    if (!deliveryLocation || typeof deliveryLocation.latitude !== 'number' || typeof deliveryLocation.longitude !== 'number') {
-      return res.status(400).json({ message: 'Delivery location is required for checkout.' });
-    }
     if (!deliveryLocation.addressText || !deliveryLocation.addressText.trim()) {
       return res.status(400).json({ message: 'Delivery address is required for checkout.' });
     }
@@ -106,10 +103,10 @@ router.post('/checkout', authMiddleware, async (req, res) => {
       })),
       total,
       deliveryLocation: {
-        latitude: deliveryLocation.latitude,
-        longitude: deliveryLocation.longitude,
+        latitude: typeof deliveryLocation.latitude === 'number' ? deliveryLocation.latitude : null,
+        longitude: typeof deliveryLocation.longitude === 'number' ? deliveryLocation.longitude : null,
         accuracy: deliveryLocation.accuracy ?? null,
-        source: deliveryLocation.source || 'browser-geolocation',
+        source: deliveryLocation.source || 'manual-entry',
         placeName: deliveryLocation.placeName || '',
         addressText: deliveryLocation.addressText.trim(),
         capturedAt: new Date(),

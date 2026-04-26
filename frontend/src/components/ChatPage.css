@@ -28,6 +28,18 @@
   box-shadow: 0 22px 44px rgba(65, 41, 15, 0.18);
 }
 
+.contact-hero-copy {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+}
+
+.contact-hero-copy h5 {
+  margin: 0;
+  text-align: left;
+}
+
 .contact-kicker {
   margin: 0 0 0.65rem;
   text-transform: uppercase;
@@ -390,6 +402,11 @@
   width: 48px;
   height: 48px;
   object-fit: contain;
+  transition: transform 0.22s ease;
+}
+
+.assistant-floating-trigger:hover img {
+  transform: scale(1.18);
 }
 
 .assistant-trigger-badge {

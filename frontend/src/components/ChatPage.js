@@ -7,6 +7,7 @@ import { AuthContext } from '../context/AuthContext';
 import API_BASE_URL, { apiUrl } from '../api';
 
 const botAvatar = 'https://cdn-icons-png.flaticon.com/512/4712/4712109.png';
+const SAVED_ADDRESS_KEY = 'bookbazzar_saved_checkout_address';
 
 const ChatPage = () => {
   const { user } = useContext(AuthContext);
@@ -27,11 +28,12 @@ const ChatPage = () => {
   const [assistantInput, setAssistantInput] = useState('');
   const [assistantSending, setAssistantSending] = useState(false);
   const [assistantError, setAssistantError] = useState('');
+  const [assistantState, setAssistantState] = useState(null);
   const [assistantMessages, setAssistantMessages] = useState([
     {
       id: 'assistant-welcome',
       role: 'assistant',
-      text: 'Hi there. I am your BookBazaar assistant. Ask me how to order a book, where to view all books, how to edit address, how payments work, or how to contact etc.',
+      text: 'Hi there. I am your BookBazaar assistant. Ask me about BookBazaar, and if you want, I can also help you order a book.',
     },
   ]);
   const messagesEndRef = useRef(null);
@@ -249,23 +251,42 @@ const ChatPage = () => {
     setAssistantInput('');
 
     try {
+      let savedAddress = null;
+      try {
+        const rawSavedAddress = localStorage.getItem(SAVED_ADDRESS_KEY);
+        savedAddress = rawSavedAddress ? JSON.parse(rawSavedAddress) : null;
+      } catch (storageError) {
+        savedAddress = null;
+      }
+
       const response = await axios.post(
         apiUrl('/api/assistant/chat'),
         {
           messages: nextMessages,
+          assistantState,
+          savedAddress,
         },
         authConfig
       );
 
+      setAssistantState(response.data.assistantState || null);
+      if (response.data.alert) {
+        alert(response.data.alert);
+      }
+      const replyList = Array.isArray(response.data.replies)
+        ? response.data.replies.filter(Boolean)
+        : [response.data.reply].filter(Boolean);
+
       setAssistantMessages((current) => [
         ...current,
-        {
-          id: `assistant-${timestamp + 1}`,
+        ...replyList.map((text, index) => ({
+          id: `assistant-${timestamp + 1 + index}`,
           role: 'assistant',
-          text: response.data.reply,
-        },
+          text,
+        })),
       ]);
     } catch (err) {
+      setAssistantState(null);
       setAssistantError(err.response?.data?.message || 'Could not get AI response.');
     } finally {
       setAssistantSending(false);
@@ -292,7 +313,7 @@ const ChatPage = () => {
       <Header />
       <div className="contact-page">
         <section className="contact-hero">
-          <div>
+          <div className="contact-hero-copy">
             <h1 className="contact-kicker">Contact</h1>
             <h5>Stay connected with readers, supporter, and your floating AI assistant.</h5>
           </div>

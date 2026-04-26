@@ -31,7 +31,6 @@ const Checkout = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [addressInput, setAddressInput] = useState(initialSavedAddress?.addressText || '');
   const [isAddressSaved, setIsAddressSaved] = useState(Boolean(initialSavedAddress));
-  const [isEditingAddress, setIsEditingAddress] = useState(!initialSavedAddress);
   const [isOrderReviewed, setIsOrderReviewed] = useState(false);
   const [paymentMethod, setPaymentMethod] = useState('cod');
   const navigate = useNavigate();
@@ -47,8 +46,8 @@ const Checkout = () => {
   const discount = subtotal > 1000 ? subtotal * 0.05 : 0;
   const total = subtotal + tax - discount;
 
-  const hasAddressDraft = Boolean(addressInput.trim() || locationData?.placeName || locationData?.latitude);
-  const savedAddressText = locationData?.addressText || addressInput.trim() || locationData?.placeName || '';
+  const hasAddressDraft = Boolean(addressInput.trim());
+  const savedAddressText = locationData?.addressText || addressInput.trim() || '';
 
   const mapSrc = useMemo(() => {
     if (!locationData) {
@@ -111,8 +110,11 @@ const Checkout = () => {
           accuracy: position.coords.accuracy ? Math.round(position.coords.accuracy) : null,
           source: 'browser-geolocation',
           placeName,
-          addressText: addressInput.trim() || placeName,
+          addressText: placeName,
         });
+        setAddressInput(placeName);
+        setIsAddressSaved(false);
+        setIsOrderReviewed(false);
         setIsLocating(false);
       },
       (error) => {
@@ -129,45 +131,31 @@ const Checkout = () => {
 
   const handleSaveAddress = () => {
     const wasSavedAlready = isAddressSaved;
-    const finalAddress = addressInput.trim() || locationData?.placeName || '';
+    const finalAddress = addressInput.trim();
 
     if (!finalAddress) {
-      setLocationError('Please write an address or capture your current location before saving.');
-      return;
-    }
-
-    if (!locationData) {
-      setLocationError('Please use your current location before saving the address.');
+      setLocationError('Please write an address or use your current location before saving.');
       return;
     }
 
     const addressToSave = {
-      ...locationData,
+      ...(locationData || {}),
       addressText: finalAddress,
+      source: locationData?.latitude && locationData?.longitude
+        ? locationData.source || 'browser-geolocation'
+        : 'manual-entry',
     };
 
     setLocationData(addressToSave);
     setAddressInput(finalAddress);
     localStorage.setItem(SAVED_ADDRESS_KEY, JSON.stringify(addressToSave));
     setIsAddressSaved(true);
-    setIsEditingAddress(false);
     setIsOrderReviewed(false);
     setLocationError('');
     alert(wasSavedAlready ? 'Address changed successfully!' : 'Address saved successfully!');
   };
 
-  const handleEditAddress = () => {
-    setIsEditingAddress(true);
-    setIsOrderReviewed(false);
-    setLocationError('');
-  };
-
   const handleConfirmOrder = () => {
-    if (!locationData) {
-      setLocationError('Please use your location before confirming the order.');
-      return;
-    }
-
     if (!savedAddressText) {
       setLocationError('Please save your address before confirming the order.');
       return;
@@ -187,10 +175,6 @@ const Checkout = () => {
     try {
       const user = JSON.parse(localStorage.getItem('user'));
       if (!user?.token) throw new Error('User not logged in');
-      if (!locationData) {
-        setLocationError('Please use your location before placing the order.');
-        return;
-      }
       if (!savedAddressText) {
         setLocationError('Please save your address before placing the order.');
         return;
@@ -201,7 +185,7 @@ const Checkout = () => {
       }
 
       const deliveryLocation = {
-        ...locationData,
+        ...(locationData || {}),
         addressText: savedAddressText,
       };
 
@@ -288,106 +272,86 @@ const Checkout = () => {
           <div className="location-box">
             <div className="location-header">
               <h3>Delivery Address</h3>
-              {isEditingAddress && (
-                <button
-                  type="button"
-                  className="btn-primary"
-                  onClick={handleUseMyLocation}
-                  disabled={isLocating}
-                >
-                  {isLocating ? 'Locating...' : 'Use My Current Location'}
-                </button>
-              )}
+              <button
+                type="button"
+                className="btn-primary"
+                onClick={handleUseMyLocation}
+                disabled={isLocating}
+              >
+                {isLocating ? 'Locating...' : 'Use My Current Location'}
+              </button>
             </div>
             <p className="location-copy">
-              {isEditingAddress
-                ? 'Add your address in the box, then use current location so we can match the exact place.'
-                : 'Your saved delivery address is ready. Use edit if you want to change it.'}
+              Write your address manually, or use your current location to fill the same address box automatically.
             </p>
 
-            {isEditingAddress ? (
-              <>
-                <div className="address-panel">
-                  <label className="address-label" htmlFor="desired-address">
-                    Address Box
-                  </label>
-                  <textarea
-                    id="desired-address"
-                    className="address-input"
-                    placeholder="Write your house number, street, landmark, area, city, and pincode"
-                    value={addressInput}
-                    onChange={(event) => {
-                      setAddressInput(event.target.value);
-                      setIsOrderReviewed(false);
-                      setLocationError('');
-                    }}
-                    rows={4}
+            <div className="address-panel">
+              <label className="address-label" htmlFor="desired-address">
+                Address Box
+              </label>
+              <textarea
+                id="desired-address"
+                className="address-input"
+                placeholder="Write your house number, street, landmark, area, city, and pincode"
+                value={addressInput}
+                onChange={(event) => {
+                  setAddressInput(event.target.value);
+                  setIsAddressSaved(false);
+                  setIsOrderReviewed(false);
+                  setLocationError('');
+                  setLocationData((current) =>
+                    current
+                      ? {
+                          ...current,
+                          addressText: event.target.value,
+                        }
+                      : null
+                  );
+                }}
+                rows={4}
+              />
+            </div>
+
+            {locationData?.latitude && locationData?.longitude ? (
+              <div className="current-location-card">
+                <div className="current-location-header">
+                  <h4>Current Location</h4>
+                  <span className="location-pill ready">Detected</span>
+                </div>
+                <div className="location-meta">
+                  <span>
+                    Accuracy: {locationData.accuracy ? `${locationData.accuracy} m` : 'Unavailable'}
+                  </span>
+                  <span>Coords: {locationData.latitude}, {locationData.longitude}</span>
+                </div>
+                <div className="map-frame">
+                  <iframe
+                    title="Delivery location map"
+                    src={mapSrc}
+                    loading="lazy"
+                    referrerPolicy="no-referrer-when-downgrade"
                   />
                 </div>
-
-                <div className="current-location-card">
-                  <div className="current-location-header">
-                    <h4>Current Location</h4>
-                    <span className={`location-pill ${locationData ? 'ready' : 'waiting'}`}>
-                      {locationData ? 'Detected' : 'Waiting'}
-                    </span>
-                  </div>
-                  {locationData ? (
-                    <>
-                      <div className="location-place">
-                        <h4>{locationData.placeName || 'Current location detected'}</h4>
-                        <p>{locationData.placeName || 'Current location captured successfully.'}</p>
-                      </div>
-                      <div className="location-meta">
-                        <span>
-                          Accuracy: {locationData.accuracy ? `${locationData.accuracy} m` : 'Unavailable'}
-                        </span>
-                        <span>Coords: {locationData.latitude}, {locationData.longitude}</span>
-                      </div>
-                      <div className="map-frame">
-                        <iframe
-                          title="Delivery location map"
-                          src={mapSrc}
-                          loading="lazy"
-                          referrerPolicy="no-referrer-when-downgrade"
-                        />
-                      </div>
-                    </>
-                  ) : (
-                    <p className="location-pending">Current location not captured yet.</p>
-                  )}
-                </div>
-
-                {hasAddressDraft && (
-                  <div className="address-actions single-action">
-                    <button type="button" className="btn-primary" onClick={handleSaveAddress}>
-                      Save Address
-                    </button>
-                  </div>
-                )}
-              </>
+              </div>
             ) : (
-              <div className="saved-address-card">
-                <div className="saved-address-head">
-                  <h4>Saved Address</h4>
-                  <span className="saved-badge">Saved</span>
-                </div>
-                <p className="saved-address-text">{savedAddressText}</p>
-                <div className="address-actions single-action">
-                  <button type="button" className="btn-secondary" onClick={handleEditAddress}>
-                    Edit Address
-                  </button>
-                </div>
+              <p className="location-pending">You can place the order with a typed address only, or use current location to auto-fill it.</p>
+            )}
+
+            {hasAddressDraft && (
+              <div className="address-actions single-action">
+                <button type="button" className="btn-primary" onClick={handleSaveAddress}>
+                  {isAddressSaved ? 'Address Saved' : 'Save Address'}
+                </button>
               </div>
             )}
 
-            {isAddressSaved && !isEditingAddress && (
+            {isAddressSaved && (
               <p className="address-status saved">Address saved for this checkout.</p>
             )}
             {locationError && <p className="location-error">{locationError}</p>}
           </div>
 
-          {isAddressSaved && !isEditingAddress && (
+          {isAddressSaved && (
             <div className="summary-box confirm-box">
               <h3>Confirm Order</h3>
               <p>Once confirmed, you can move to payment. If something looks wrong, cancel and update the details.</p>
