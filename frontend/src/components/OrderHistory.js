@@ -1,15 +1,14 @@
 import React, { useEffect, useState, useContext } from 'react';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 import Header from './Header';
 import { AuthContext } from '../context/AuthContext';
 import './OrderHistory.css';
 import { apiUrl } from '../api';
 
-const OrderHistory = () => {
+  const OrderHistory = () => {
   const [orders, setOrders] = useState([]);
   const { user } = useContext(AuthContext);
-  const mapLink = (location) =>
-    `https://www.google.com/maps?q=${location.latitude},${location.longitude}`;
 
   useEffect(() => {
     const fetchOrderHistory = async () => {
@@ -67,23 +66,9 @@ const OrderHistory = () => {
                 {order.deliveryLocation?.latitude && order.deliveryLocation?.longitude ? (
                   <div className="order-location">
                     <div>
-                      <span className="order-label">Delivery Place:</span>{' '}
-                      <span className="order-value">
-                        {order.deliveryLocation.placeName || 'Current location detected'}
-                      </span>
-                    </div>
-                    <div>
-                      <span className="order-label">Saved Address:</span>{' '}
+                      <span className="order-label">Delivered Address:</span>{' '}
                       <span className="order-value">
                         {order.deliveryLocation.addressText || 'No manual address saved'}
-                      </span>
-                    </div>
-                    <div>
-                      <span className="order-label">Accuracy:</span>{' '}
-                      <span className="order-value">
-                        {order.deliveryLocation.accuracy
-                          ? `${order.deliveryLocation.accuracy} m`
-                          : 'Unavailable'}
                       </span>
                     </div>
                     <div>
@@ -92,29 +77,31 @@ const OrderHistory = () => {
                         {order.paymentMethod === 'online' ? 'Online Payment' : 'Cash on Delivery'}
                       </span>
                     </div>
-                    <a
-                      href={mapLink(order.deliveryLocation)}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="map-link"
-                    >
-                      Open in Map
-                    </a>
                   </div>
                 ) : (
                   <div className="order-location">
-                    <span className="order-label">Delivery Location:</span>{' '}
-                    <span className="order-value">Not captured for this order</span>
+                    <div>
+                      <span className="order-label">Saved Address:</span>{' '}
+                      <span className="order-value">No saved address found for this order</span>
+                    </div>
+                    <div>
+                      <span className="order-label">Payment:</span>{' '}
+                      <span className="order-value">
+                        {order.paymentMethod === 'online' ? 'Online Payment' : 'Cash on Delivery'}
+                      </span>
+                    </div>
                   </div>
                 )}
                 <ul className="order-books-list">
                   {order.items
                     .filter((item) => item.bookId)
                     .map((item) => (
-                      <li key={item.bookId._id} className="order-book-item">
-                        <span className="book-title">{item.bookId.title}</span>
-                        <span className="book-qty">x {item.quantity}</span>
-                        <span className="book-price">Rs. {item.bookId.price}</span>
+                      <li key={item.bookId._id}>
+                        <Link to={`/shop#book-${item.bookId._id}`} className="order-book-item">
+                          <span className="book-title">{item.bookId.title}</span>
+                          <span className="book-qty">x {item.quantity}</span>
+                          <span className="book-price">Rs. {item.bookId.price}</span>
+                        </Link>
                       </li>
                     ))}
                 </ul>

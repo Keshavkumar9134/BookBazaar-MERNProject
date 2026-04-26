@@ -49,6 +49,17 @@ const BookList = () => {
   }, [location.search]);
 
   useEffect(() => {
+    if (!books.length || !location.hash) return;
+
+    const targetId = location.hash.replace('#', '');
+    const target = document.getElementById(targetId);
+
+    if (target) {
+      target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+  }, [books, location.hash]);
+
+  useEffect(() => {
     const params = new URLSearchParams(location.search);
     const genre = params.get('genre');
     const sort = params.get('sort');
@@ -192,7 +203,7 @@ const BookList = () => {
 
         <div className="User_books">
           {filteredBooks.map((book) => (
-            <div key={book._id} className="book">
+            <div key={book._id} id={`book-${book._id}`} className="book">
               <table className="book-table">
                 <tbody>
                   <tr className="book-image">

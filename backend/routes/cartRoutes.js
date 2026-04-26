@@ -73,7 +73,6 @@ router.post('/clear', authMiddleware, async (req, res) => {
 router.post('/checkout', authMiddleware, async (req, res) => {
   try {
     const { deliveryLocation, paymentMethod } = req.body;
-    console.log('Checkout request received for user:', req.user.id);
     const user = await User.findById(req.user.id).populate('cart.bookId');
     if (!user) return res.status(404).json({ message: 'User not found' });
     if (!deliveryLocation || typeof deliveryLocation.latitude !== 'number' || typeof deliveryLocation.longitude !== 'number') {

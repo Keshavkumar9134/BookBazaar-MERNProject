@@ -5,6 +5,7 @@ const dotenv = require('dotenv');
 const bookRoutes = require('./routes/bookRoutes');
 const cartRoutes = require('./routes/cartRoutes');
 const chatRoutes = require('./routes/chatRoutes');
+const assistantRoutes = require('./routes/assistantRoutes');
 const userRoutes = require('./routes/userRoutes');
 const path = require('path');
 
@@ -32,6 +33,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api', orderRoutes);
 app.use('/api', userRoutes);
 app.use('/api', chatRoutes);
+app.use('/api', assistantRoutes);
 
 app.use(express.static(path.join(__dirname, '..', 'frontend', 'build')));
 
