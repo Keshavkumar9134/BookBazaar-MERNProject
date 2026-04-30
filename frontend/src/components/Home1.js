@@ -11,14 +11,14 @@ const Home1 = () => {
       <Header />
       <div className="home1-body">
         <h3>Welcome to</h3>
-        <h1>BookBazaar</h1>
+        <h1>BookGenie</h1>
         <p>A cozy corner for every reader.</p>
 
         <div
   id="carouselExampleCaptions"
   className="carousel slide"
   data-bs-ride="carousel"
-  data-bs-interval="3000" // Optional: 3 seconds per slide
+  data-bs-interval="3000" 
 >
   <div className="carousel-indicators">
     <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" className="active" aria-current="true" aria-label="Slide 1"></button>

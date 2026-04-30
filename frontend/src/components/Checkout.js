@@ -6,7 +6,7 @@ import './Checkout.css';
 import './CheckoutTheme.css';
 import { apiUrl } from '../api';
 
-const SAVED_ADDRESS_KEY = 'bookbazzar_saved_checkout_address';
+const SAVED_ADDRESS_KEY = 'bookgenie_saved_checkout_address';
 
 const getSavedAddress = () => {
   try {

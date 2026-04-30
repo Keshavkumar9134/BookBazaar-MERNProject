@@ -63,7 +63,7 @@ import { apiUrl } from '../api';
                     <span className="order-value">Rs. {order.total.toFixed(2)}</span>
                   </div>
                 </div>
-                {order.deliveryLocation?.latitude && order.deliveryLocation?.longitude ? (
+                {order.deliveryLocation?.addressText ? (
                   <div className="order-location">
                     <div>
                       <span className="order-label">Delivered Address:</span>{' '}

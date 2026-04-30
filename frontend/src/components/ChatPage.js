@@ -7,7 +7,7 @@ import { AuthContext } from '../context/AuthContext';
 import API_BASE_URL, { apiUrl } from '../api';
 
 const botAvatar = 'https://cdn-icons-png.flaticon.com/512/4712/4712109.png';
-const SAVED_ADDRESS_KEY = 'bookbazzar_saved_checkout_address';
+const SAVED_ADDRESS_KEY = 'bookgenie_saved_checkout_address';
 
 const ChatPage = () => {
   const { user } = useContext(AuthContext);
@@ -33,7 +33,7 @@ const ChatPage = () => {
     {
       id: 'assistant-welcome',
       role: 'assistant',
-      text: 'Hi there. I am your BookBazaar assistant. Ask me about BookBazaar, and if you want, I can also help you order a book.',
+      text: 'Hi there. I am your BookGenie assistant. Ask me about BookGenie, and if you want, I can also help you order a book.',
     },
   ]);
   const messagesEndRef = useRef(null);
@@ -343,7 +343,7 @@ const ChatPage = () => {
               >
                 <span className="contact-mode-tag support">Support</span>
                 <h2>Wants Some Help</h2>
-                <p>{helpContact ? `Chat directly with ${helpContact.username} from a BookBazaar trusted supporter.` : 'One of our trusted BookBazaar Supporter will appear here when available.'}</p>
+                <p>{helpContact ? `Chat directly with ${helpContact.username} from a BookGenie trusted supporter.` : 'One of our trusted BookGenie Supporter will appear here when available.'}</p>
               </button>
               <button
                 className={`contact-mode-card ${activeCategory === 'users' ? 'active' : ''}`}
@@ -375,7 +375,7 @@ const ChatPage = () => {
                         <p>
                           {helpConversation
                             ? helpConversation.lastMessageText || 'Open help conversation'
-                            : 'Start a help conversation with BookBazaar Supporter'}
+                            : 'Start a help conversation with BookGenie Supporter'}
                         </p>
                       </button>
                     )}
@@ -431,7 +431,7 @@ const ChatPage = () => {
                 <p>
                   {activeUser
                     ? activeCategory === 'help'
-                      ? `You are chatting with a trusted BookBazaar supporter `
+                      ? `You are chatting with a trusted BookGenie supporter `
                       : `Chatting with  ${activeUser.username}`
                     : 'Pick a reader or open Wants Some Help to begin.'}
                 </p>
@@ -516,7 +516,7 @@ const ChatPage = () => {
               <div className="assistant-widget-brand">
                 <img src={botAvatar} alt="AI assistant" className="assistant-widget-avatar" />
                 <div>
-                  <strong>BookBazaar AI</strong>
+                  <strong>BookGenie AI</strong>
                   <span>Website helper</span>
                 </div>
               </div>
@@ -568,7 +568,7 @@ const ChatPage = () => {
             <form className="assistant-widget-composer" onSubmit={handleAssistantSend}>
               <textarea
                 rows={2}
-                placeholder="Ask about BookBazaar features..."
+                placeholder="Ask about BookGenie features..."
                 value={assistantInput}
                 onChange={(e) => setAssistantInput(e.target.value)}
                 disabled={assistantSending}

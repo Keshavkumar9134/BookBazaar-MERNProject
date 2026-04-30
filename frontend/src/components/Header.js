@@ -23,8 +23,8 @@ const Header = () => {
   return (
     <header className="main-header">
       <div className="logo" onClick={() => handleNavClick('/home1')}>
-        <img src="/icon.png" alt="BookBazaar logo" className="logo-image" />
-        <span className="logo-text">BookBazaar</span>
+        <img src="/icon.png" alt="BookGenie logo" className="logo-image" />
+        <span className="logo-text">BookGenie</span>
       </div>
       <nav className={`nav-links ${menuOpen ? 'open' : ''}`}>
         <NavLink to="/home1" onClick={() => setMenuOpen(false)}>Home</NavLink>

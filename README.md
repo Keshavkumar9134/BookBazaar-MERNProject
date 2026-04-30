@@ -1,4 +1,4 @@
-#  BookBazaar MERN Project
+# BookGenie MERN Project
 
 A full-stack Book Store application built using MERN stack.
 

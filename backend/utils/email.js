@@ -53,13 +53,13 @@ const sendOtpEmail = async ({ to, otp, username }) => {
   await transporter.sendMail({
     from: process.env.SMTP_FROM || process.env.SMTP_USER,
     to,
-    subject: 'BookShope email verification OTP',
-    text: `Hello ${username}, your BookShope OTP is ${otp}. It expires in 10 minutes.`,
+    subject: 'BookGenie email verification OTP',
+    text: `Hello ${username}, your BookGenie OTP is ${otp}. It expires in 10 minutes.`,
     html: `
       <div style="font-family: Arial, sans-serif; line-height: 1.5;">
         <h2>Verify your email</h2>
         <p>Hello ${username},</p>
-        <p>Your BookShope OTP is:</p>
+        <p>Your BookGenie OTP is:</p>
         <p style="font-size: 24px; font-weight: bold; letter-spacing: 4px;">${otp}</p>
         <p>This OTP expires in 10 minutes.</p>
       </div>
